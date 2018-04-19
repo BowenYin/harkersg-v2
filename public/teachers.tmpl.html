@@ -1,0 +1,20 @@
+<md-dialog layout-padding layout-margin>
+	<h3>Add Teachers to Study Guide ID# {{tsg.id}}</h3>
+	<md-dialog-content>
+		If this study guide is useful, add your teacher's name.<br>
+		Note: You cannot delete pre-existing teachers from the list.<br>
+		Press <code>return</code> after typing to add the teacher you have entered.
+		<form name="teachersForm">
+			<md-chips id="teacherchips" name="teachers" ng-model="teachers" placeholder="Add teachers... (type 'All' for all teachers)" secondary-placeholder="Add teachers..." md-removable="false" readonly="false" md-enable-chip-edit="true" input-aria-label="Add Teachers" md-max-chips="5" md-autofocus ng-focus="resize()" md-on-add="resize()" md-on-remove="resize()"></md-chips>
+			<div ng-messages="teachersForm.teachers.$error">
+				<div ng-message="md-max-chips">Maximum number of teachers reached.</div>
+			</div>
+		</form>
+	</md-dialog-content>
+	<md-dialog-actions>
+		<span class="md-caption">The teachers you add will show up for ALL users.</span>
+		<span flex></span>
+		<md-button ng-click="cancel()">Cancel</md-button>
+		<md-button class="md-primary md-raised" ng-click="save()">Save</md-button>
+	</md-dialog-actions>
+</md-dialog>

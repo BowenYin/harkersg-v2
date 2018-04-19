@@ -1,0 +1,26 @@
+<section flex layout="column">
+  <span layout-padding layout-margin class="md-headline">Feedback</span><br>
+  <md-content flex layout-padding>
+    <form layout-margin name="feedback" flex flex-md="70" flex-lg="50" flex-xl="30">
+      <md-tooltip ng-if="fbNo" md-delay="200" md-direction="top">Max one submission per hour.</md-tooltip>
+      <md-tooltip ng-if="!signedIn" md-delay="200" md-direction="top">Please sign in to send feedback.</md-tooltip>
+      <p class="md-body-2">Type of Feedback</p>
+      <md-radio-group ng-model="fb.type" ng-disabled="fbNo||!signedIn">
+        <md-radio-button value="comment">Comment</md-radio-button>
+        <md-radio-button value="suggestion">Feature Suggestion</md-radio-button>
+        <md-radio-button value="bug">Bug Report</md-radio-button>
+        </md-radio-group>
+      <md-input-container class="md-block">
+        <label>Suggestions/Comments/Questions/Issues</label>
+        <textarea name="text" required md-no-asterisk ng-model="fb.text" ng-disabled="fbNo||!signedIn" md-maxlength="500" minlength="10" rows="2" max-rows="10" md-no-resize></textarea>
+        <div ng-messages="feedback.text.$error" ng-show="feedback.text.$dirty">
+          <div ng-message="required">Required.</div>
+          <div ng-message="md-maxlength">Too many characters.</div>
+          <div ng-message="minlength">That's not useful feedback.</div>
+        </div>
+      </md-input-container>
+      <md-button type="submit" ng-click="submit()" ng-disabled="fbNo||!signedIn" class="md-primary md-raised">Submit</md-button>
+      <md-content class="md-caption">Note: You can only submit once per hour.</md-content>
+    </form>
+  </md-content>
+</section>

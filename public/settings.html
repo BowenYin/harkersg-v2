@@ -1,0 +1,55 @@
+<section layout-fill flex layout="column" layout-gt-sm="row">
+  <md-content flex layout-margin layout-padding layout="column">
+    More settings, including notifications, and a profile, coming soon.
+  </md-content>
+  <md-content flex layout-margin layout="column">
+    <div layout-margin layout="row" layout-align="start center">
+      <span>Dark Mode (not recommended):</span>
+      <md-switch aria-label="dark" ng-model="dark" ng-change="darkTheme()"></md-switch>
+    </div>
+    <div layout-margin layout="row" layout-align="space-between center">
+      <span>Primary Theme Color: (top toolbar, buttons, text fields)</span>
+      <md-select ng-model="settings.primary" placeholder="Primary Color" class="md-no-underline select-icon-margin" md-on-close="setPrimary()">
+        <md-option value="red"><md-icon style="color: #E11;">lens</md-icon>Red</md-option>
+        <md-option value="deep-orange"><md-icon style="color: #F51;">lens</md-icon>Red-Orange</md-option>
+        <md-option value="orange"><md-icon style="color: #F83;">lens</md-icon>Orange</md-option>
+        <md-option value="amber"><md-icon style="color: #FB1;">lens</md-icon>Amber</md-option>
+        <md-option value="yellow"><md-icon style="color: #FD4;">lens</md-icon>Yellow</md-option>
+        <md-option value="lime"><md-icon style="color: #BC2;">lens</md-icon>Lime</md-option>
+        <md-option value="light-green"><md-icon style="color: #7C3;">lens</md-icon>Light Green</md-option>
+        <md-option value="green"><md-icon style="color: #3A4;">lens</md-icon>Green</md-option>
+        <md-option value="teal"><md-icon style="color: #098;">lens</md-icon>Turquoise</md-option>
+        <md-option value="cyan"><md-icon style="color: #0BC;">lens</md-icon>Cyan</md-option>
+        <md-option value="light-blue"><md-icon style="color: #4AE;">lens</md-icon>Light Blue</md-option>
+        <md-option value="blue"><md-icon style="color: #17E;">lens</md-icon>Blue <i>(default)</i></md-option>
+        <md-option value="indigo"><md-icon style="color: #239;">lens</md-icon>Indigo</md-option>
+        <md-option value="purple"><md-icon style="color: #82C;">lens</md-icon>Purple</md-option>
+        <md-option value="pink"><md-icon style="color: #D3A;">lens</md-icon>Pink</md-option>
+        <md-option value="brown"><md-icon style="color: #954;">lens</md-icon>Brown</md-option>
+        <md-option value="grey"><md-icon style="color: #888;">lens</md-icon>Gray</md-option>
+      </md-select>
+    </div>
+    <div layout-margin layout="row" layout-align="space-between center">
+      <span>Secondary Theme Color: (checkboxes, nav-bar indicator)</span>
+      <md-select ng-model="settings.accent" placeholder="Accent Color" class="md-no-underline select-icon-margin" md-on-close="setAccent()">
+        <md-option value="red"><md-icon style="color: #E11;">lens</md-icon>Red</md-option>
+        <md-option value="deep-orange"><md-icon style="color: #F51;">lens</md-icon>Red-Orange</md-option>
+        <md-option value="orange"><md-icon style="color: #F83;">lens</md-icon>Orange <i>(default)</i></md-option>
+        <md-option value="amber"><md-icon style="color: #FB1;">lens</md-icon>Amber</md-option>
+        <md-option value="yellow"><md-icon style="color: #FD4;">lens</md-icon>Yellow</md-option>
+        <md-option value="lime"><md-icon style="color: #BC2;">lens</md-icon>Lime</md-option>
+        <md-option value="light-green"><md-icon style="color: #7C3;">lens</md-icon>Light Green</md-option>
+        <md-option value="green"><md-icon style="color: #3A4;">lens</md-icon>Green</md-option>
+        <md-option value="teal"><md-icon style="color: #098;">lens</md-icon>Turquoise</md-option>
+        <md-option value="cyan"><md-icon style="color: #0BC;">lens</md-icon>Cyan</md-option>
+        <md-option value="light-blue"><md-icon style="color: #4AE;">lens</md-icon>Light Blue</md-option>
+        <md-option value="blue"><md-icon style="color: #17E;">lens</md-icon>Blue</md-option>
+        <md-option value="indigo"><md-icon style="color: #239;">lens</md-icon>Indigo</md-option>
+        <md-option value="purple"><md-icon style="color: #82C;">lens</md-icon>Purple</md-option>
+        <md-option value="pink"><md-icon style="color: #D3A;">lens</md-icon>Pink</md-option>
+        <md-option value="brown"><md-icon style="color: #954;">lens</md-icon>Brown</md-option>
+        <md-option value="grey"><md-icon style="color: #888;">lens</md-icon>Gray</md-option>
+      </md-select>
+    </div>
+  </md-content>
+</section>
