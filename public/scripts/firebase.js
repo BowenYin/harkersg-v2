@@ -1,7 +1,8 @@
 var auth=firebase.auth();
 var db=firebase.database();
 var fs=firebase.firestore();
-var sto=firebase.storage();
+//var sto=firebase.storage();
+//var msg=firebase.messaging();
 var func=firebase.functions();
 auth.useDeviceLanguage();
 var profile;

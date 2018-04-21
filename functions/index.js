@@ -1,6 +1,6 @@
-const functions=require('firebase-functions');
-const admin=require('firebase-admin');
-admin.initializeApp(functions.config().firebase);
+const functions=require("firebase-functions");
+const admin=require("firebase-admin");
+admin.initializeApp();
 exports.manageFlags=functions.firestore.document("studyguides/{id}").onUpdate((change,context)=>{
   var data=change.after.data();
   if (data.flags.length>4) {
