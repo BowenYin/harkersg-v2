@@ -57,12 +57,12 @@
 			</md-list>
 			<div layout-padding layout-margin>
 				<code>v2.0</code>
-				<div align="center" id="copyright" class="md-button"><md-icon>code</md-icon> 2018 by Bowen Yin</div>
+				<div align="center" id="copyright" class="md-button"><md-icon>code</md-icon> © 2018 Bowen Yin</div>
 			</div>
 		</md-content>
 	</md-sidenav>
 	<div flex layout="column">
-		<md-toolbar class="md-whiteframe-4dp">
+		<md-toolbar>
 			<div class="md-toolbar-tools">
 				<md-button class="md-icon-button" aria-label="menu" ng-click="toggleLeftMenu()">
 					<md-icon>menu</md-icon>
@@ -95,9 +95,10 @@
 				</md-list-item>
 				<div id="sign-in" class="g-signin2 md-button" data-width="100" data-onsuccess="onSignIn"></div>
 			</div>
-			<md-nav-bar aria-label="nav-bar" md-selected-nav-item="navItem" style="overflow-x: scroll;">
+			<md-nav-bar aria-label="nav-bar" md-selected-nav-item="navItem" style="overflow-x: scroll;" class="md-whiteframe-2dp">
 				<md-nav-item md-nav-href="/" name="home">Home</md-nav-item>
 				<md-nav-item md-nav-href="/about" name="about">About</md-nav-item>
+				<md-nav-item md-nav-href="/courses" name="courses">Courses</md-nav-item>
 				<md-nav-item md-nav-href="/studyguides" name="studyguides">Study Guides</md-nav-item>
 				<md-nav-item md-nav-href="/feedback" name="feedback">Feedback</md-nav-item>
 			</md-nav-bar>
@@ -123,7 +124,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.9/angular-material.min.js"></script>
 	<script src="/__/firebase/4.13.0/firebase.js"></script>
 	<script src="/__/firebase/4.13.0/firebase-app.js"></script>
 	<script src="/__/firebase/4.13.0/firebase-auth.js"></script>
@@ -146,8 +147,8 @@
 		firebase.initializeApp(config);
 	</script>
 	<script type="text/javascript">
-		var app=angular.module("App", ["ngMaterial","ngMessages","ngRoute","ngSanitize"]);
-		app.controller("MainControl", function($scope, $mdSidenav, $mdDialog) {
+		var app=angular.module("App",["ngMaterial","ngMessages","ngRoute","ngSanitize"]);
+		app.controller("MainControl",function($scope,$mdSidenav,$mdDialog) {
 			$scope.settings=[];
 			$scope.email="";
 			$scope.toggleLeftMenu=function() {
@@ -257,12 +258,13 @@
 			$mdThemingProvider.theme("default").primaryPalette(primary,{"default": "700"}).accentPalette(accent);
 			$mdThemingProvider.enableBrowserColor();
 		});
-		app.config(function($locationProvider, $routeProvider) {
+		app.config(function($locationProvider,$routeProvider) {
 			$routeProvider
 				.when("/", {templateUrl: "home.html", controller: "HomeControl"})
 				.when("/studyguides", {templateUrl: "studyguides.html", controller: "SGControl"})
 				.when("/notes", {redirectTo: "/studyguides"})
 				.when("/sg", {redirectTo: "/studyguides"})
+				.when("/courses", {templateUrl: "courses.html", controller: "CoursesControl"})
 				.when("/settings", {templateUrl: "settings.html", controller: "SettingsControl"})
 				.when("/about", {templateUrl: "about.html", controller: "AboutControl"})
 				.when("/feedback", {templateUrl: "feedback.html", controller: "FeedbackControl"})
@@ -273,6 +275,7 @@
 		});
 	</script>
 	<script src="/scripts/main.js"></script>
+	<script src="/scripts/courses.js"></script>
 	<script src="/scripts/studyguides.js"></script>
 	<style>
 		#copyright:hover {

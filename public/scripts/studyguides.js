@@ -1,4 +1,4 @@
-app.controller("SGControl", function($scope, $rootScope, $mdToast, $mdDialog) {
+app.controller("SGControl",function($scope,$rootScope,$mdToast,$mdDialog) {
   $rootScope.navItem="studyguides";
   $rootScope.pageTitle="Notes / Study Guides";
   $rootScope.tabName="Notes/Study Guides - HarkerSG";
@@ -67,12 +67,13 @@ app.controller("SGControl", function($scope, $rootScope, $mdToast, $mdDialog) {
     $scope.form.link=undefined;
     $scope.form.subject=undefined;
     $scope.form.folder=undefined;
+    $scope.form.honor=undefined;
     $scope.addSG.$setPristine();
     $scope.addSG.$setUntouched();
   };
   $scope.submit=function() {
     if ($scope.addSG.$valid) {
-      if ($scope.form.folder==undefined||$scope.form.folder=="None")
+      if ($scope.form.folder==undefined || $scope.form.folder=="None")
         $scope.form.folder=null;
       fs.collection("studyguides").add({
         title: $scope.form.title,
@@ -109,6 +110,13 @@ app.controller("SGControl", function($scope, $rootScope, $mdToast, $mdDialog) {
 				document.activeElement.blur();
       	$scope.clear();
 			}, 100);
+    } else if (!$scope.form.honor) {
+      document.getElementById("honor-sg").classList.add("md-focused");
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent("Please accept the honor code.")
+          .hideDelay(3000)
+      );
     }
   };
   $scope.clearFolder=function() {
@@ -172,7 +180,7 @@ app.controller("SGControl", function($scope, $rootScope, $mdToast, $mdDialog) {
       window.open(link, "_blank");
     }, 250);
   };
-  $scope.like=function(id, l, uid) {
+  $scope.like=function(id,l,uid) {
     if (!$scope.allowed) {
       $mdToast.show(
 				$mdToast.simple()
@@ -196,7 +204,7 @@ app.controller("SGControl", function($scope, $rootScope, $mdToast, $mdDialog) {
       });
     }
   };
-  $scope.flag=function(id, l, uid) {
+  $scope.flag=function(id,l,uid) {
     if ($scope.flags>2) {
       $mdToast.show(
 				$mdToast.simple()
@@ -236,7 +244,7 @@ app.controller("SGControl", function($scope, $rootScope, $mdToast, $mdDialog) {
     else
       return "/images/link.png";
   };
-	function TeachersControl($scope, $mdDialog, sg) {
+	function TeachersControl($scope,$mdDialog,sg) {
 		$scope.tsg=sg;
     $scope.teachers=sg.teachers.slice();
 		$scope.cancel=function() {
@@ -263,7 +271,7 @@ app.controller("SGControl", function($scope, $rootScope, $mdToast, $mdDialog) {
       }, 100);
     };
 	}
-	$scope.addTeachers=function(event, studyguide) {
+	$scope.addTeachers=function(event,studyguide) {
     if ($scope.flags>2) {
       $mdToast.show(
 				$mdToast.simple()
@@ -299,7 +307,7 @@ app.controller("SGControl", function($scope, $rootScope, $mdToast, $mdDialog) {
       $scope.settings.subjects.push(subj);
     fs.collection("users").doc($scope.uid).update({"settings.subjects": $scope.settings.subjects});
   };
-  $scope.toggleFolder=function(folder, count) {
+  $scope.toggleFolder=function(folder,count) {
     folder.mdCols=3-(folder.mdCols||1);
     folder.smCols=2-(folder.smCols||1);
     folder.lgCols=5-(folder.lgCols||1);
@@ -310,6 +318,6 @@ app.controller("SGControl", function($scope, $rootScope, $mdToast, $mdDialog) {
 		return function(item) {return $scope.cats.length==0 || $scope.cats.indexOf(item.cat)!=-1;};
 	};
 });
-app.controller("FormSubjectControl", function($element) {
-  $element.find('input').on('keydown', function(ev) {ev.stopPropagation();});
+app.controller("FormSubjectControl",function($element) {
+  $element.find('input').on('keydown',function(ev) {ev.stopPropagation();});
 });

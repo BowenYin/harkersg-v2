@@ -3,3 +3,5 @@ functions/package-lock.json
 public/angular-material.css
 public/angular-material-old.css
 public/scripts/autotrack.js
+firebase-debug.log
+.vscode

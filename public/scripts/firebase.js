@@ -1,16 +1,16 @@
-var auth=firebase.auth();
-var db=firebase.database();
-var fs=firebase.firestore();
-//var sto=firebase.storage();
-//var msg=firebase.messaging();
-var func=firebase.functions();
+const auth=firebase.auth();
+const db=firebase.database();
+const fs=firebase.firestore();
+//const sto=firebase.storage();
+//const msg=firebase.messaging();
+const func=firebase.functions();
 auth.useDeviceLanguage();
 var profile;
 function onSignIn(googleUser) {
   profile=googleUser.getBasicProfile();
   var unsubscribe=auth.onAuthStateChanged(function(firebaseUser) {
     unsubscribe();
-    if (!isUserEqual(googleUser, firebaseUser)) {
+    if (!isUserEqual(googleUser,firebaseUser)) {
       var credential=firebase.auth.GoogleAuthProvider.credential(googleUser.getAuthResponse().id_token);
       auth.signInWithCredential(credential).catch(function(error) {
         console.error("Error Code: "+error.code+" Error Message: "+error.message);
@@ -32,11 +32,11 @@ function onSignIn(googleUser) {
     data: serializedData
   });
 }
-function isUserEqual(googleUser, firebaseUser) {
+function isUserEqual(googleUser,firebaseUser) {
   if (firebaseUser) {
     var providerData=firebaseUser.providerData;
-    for (var i=0; i<providerData.length; i++) {
-      if (providerData[i].providerId===firebase.auth.GoogleAuthProvider.PROVIDER_ID&&providerData[i].uid===googleUser.getBasicProfile().getId())
+    for (let i=0; i<providerData.length; i++) {
+      if (providerData[i].providerId===firebase.auth.GoogleAuthProvider.PROVIDER_ID && providerData[i].uid===googleUser.getBasicProfile().getId())
         return true;
     }
   }
