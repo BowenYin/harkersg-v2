@@ -1,0 +1,88 @@
+<style>
+	fieldset {
+		border-style: solid;
+		padding: 14px 16px 0 16px;
+	}
+
+	legend {
+		text-transform: uppercase;
+		font-weight: bold;
+	}
+</style>
+<md-content layout-fill layout="column">
+	<div flex="none" layout-padding layout="column" layout-gt-xs="row">
+		<div flex layout="column">
+			<fieldset>
+				<legend>Math</legend>
+				<div ng-repeat="subject in courses['ms-math']">
+					<md-checkbox>{{subject}}</md-checkbox>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>English</legend>
+				<div ng-repeat="subject in courses['ms-eng']">
+					<md-checkbox>{{subject}}</md-checkbox>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>History</legend>
+				<div ng-repeat="subject in courses['ms-hist']">
+					<md-checkbox>{{subject}}</md-checkbox>
+				</div>
+			</fieldset>
+		</div>
+		<div flex layout="column">
+			<fieldset>
+				<legend>Science</legend>
+				<div ng-repeat="subject in courses['ms-sci']">
+					<md-checkbox>{{subject}}</md-checkbox>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>Languages</legend>
+				<div ng-repeat="subject in courses['ms-lang']">
+					<md-checkbox>{{subject}}</md-checkbox>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+	<div flex="none" layout-padding layout="column" layout-gt-xs="row">
+		<div flex layout="column">
+			<fieldset>
+				<legend>Math</legend>
+				<div ng-repeat="subject in courses.math">
+					<md-checkbox>{{subject}}</md-checkbox>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>English</legend>
+				<div ng-repeat="subject in courses.eng">
+					<md-checkbox>{{subject}}</md-checkbox>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>Science</legend>
+				<div ng-repeat="subject in courses.sci">
+					<md-checkbox>{{subject}}</md-checkbox>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>History</legend>
+				<div ng-repeat="subject in courses.hist">
+					<md-checkbox>{{subject}}</md-checkbox>
+				</div>
+			</fieldset>
+		</div>
+		<div flex layout="column">
+			<fieldset>
+				<legend>8th Grade</legend>
+			</fieldset>
+			<fieldset>
+				<legend>??</legend>
+			</fieldset>
+			<fieldset>
+				<legend>Other</legend>
+			</fieldset>
+		</div>
+	</div>
+</md-content>
