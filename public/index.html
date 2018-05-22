@@ -10,7 +10,8 @@
 	<meta name="viewport" content="width=device-width">
 	<link rel="shortcut icon" href="/images/favicon.png">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
-	<link rel="stylesheet" type="text/css" href="/angular-material.css">
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.9/angular-material.min.css">
+	<link rel="stylesheet" href="/styles/styles.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<meta name="google-signin-client_id" content="978510109102-3mompmb5s816pld0anjl213h1rqoldcn.apps.googleusercontent.com">
 	<meta name="google-signin-cookiepolicy" content="single_host_origin">
@@ -146,7 +147,7 @@
 		};
 		firebase.initializeApp(config);
 	</script>
-	<script type="text/javascript">
+	<script>
 		var app=angular.module("App",["ngMaterial","ngMessages","ngRoute","ngSanitize"]);
 		app.controller("MainControl",function($scope,$mdSidenav,$mdDialog) {
 			$scope.settings=[];

@@ -5,3 +5,5 @@ public/angular-material-old.css
 public/scripts/autotrack.js
 firebase-debug.log
 .vscode
+public/angular-material-orig.css
+.DS_Store

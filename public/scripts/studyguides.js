@@ -58,8 +58,8 @@ app.controller("SGControl",function($scope,$rootScope,$mdToast,$mdDialog) {
   });
   $scope.hoverFx=function() {
     $("md-grid-tile").hover(
-      function() {$(this).addClass("md-whiteframe-6dp");},
-      function() {$(this).removeClass("md-whiteframe-6dp");}
+      function() {$(this).addClass("md-whiteframe-3dp");},
+      function() {$(this).removeClass("md-whiteframe-3dp");}
     );
   };
   $scope.clear=function() {
@@ -321,3 +321,4 @@ app.controller("SGControl",function($scope,$rootScope,$mdToast,$mdDialog) {
 app.controller("FormSubjectControl",function($element) {
   $element.find('input').on('keydown',function(ev) {ev.stopPropagation();});
 });
+applyTemplate=function(msg) {return;};

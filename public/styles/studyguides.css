@@ -1,0 +1,21 @@
+.flip {
+	transform: scaleY(-1);
+}
+md-card-header, md-card-title, md-card-content {
+	cursor: pointer;
+}
+md-card-header:focus, md-card-title:focus, md-card-content:focus {
+	outline: none;
+}
+md-grid-tile.sg md-card-actions {
+	display: none !important;
+}
+md-grid-tile.sg:hover md-card-actions {
+	display: flex !important;
+}
+md-card .md-icon-button:not([disabled]) md-icon {
+	transition-duration: 100ms;
+}
+md-card .md-icon-button:not([disabled]):hover md-icon {
+	opacity: 0.8;
+}

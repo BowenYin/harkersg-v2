@@ -1,0 +1,27 @@
+html {
+	overflow: hidden;
+}
+input {
+	transition: border 150ms;
+	-webkit-transition: border 150ms;
+}
+.md-ripple-container {
+	background-color: transparent !important;
+}
+md-grid-tile {
+	transition-duration: 150ms;
+	-webkit-transition-duration: 150ms;
+}
+md-select-value {
+	transition-duration: 150ms;
+	-webkit-transition-duration: 150ms;
+}
+md-sidenav {
+	width: 300px;
+}
+a._md-nav-button {
+	border-radius: 0;
+}
+md-select-menu md-icon,md-select-value md-icon {
+	margin-right: 8px !important;
+}

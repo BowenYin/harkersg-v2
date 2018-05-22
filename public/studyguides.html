@@ -1,7 +1,4 @@
-<style>
-	md-card-header, md-card-title, md-card-content {cursor: pointer;}
-	md-card-header:focus, md-card-title:focus, md-card-content:focus {outline: none;}
-</style>
+<link rel="stylesheet" href="styles/studyguides.css">
 <md-content flex>
 	<md-toolbar style="z-index: 3;"><md-subheader>
 		<div layout="column" layout-gt-xs="row">
@@ -47,6 +44,7 @@
 	</md-subheader></md-toolbar>
 	<md-content layout-margin layout-padding ng-if="!signedIn"><md-icon>info</md-icon>Please sign in to access study guides.</md-content>
 	<md-progress-circular md-mode="indeterminate" ng-if="!loaded" style="margin: 0 auto;"></md-progress-circular>
+	<img src="images/harker.gif" ng-if="!loaded" height="10%" style="margin-left: 50%">
 	<section ng-repeat="subject in subjects | filter: filterSG() | filter: {id: search}" ng-mouseenter="hoverFx()">
 		<md-subheader class="md-whiteframe-2dp" layout="row">
 			<div layout="row">
@@ -76,7 +74,7 @@
 							</md-card-actions>
 						</md-card>
 						<md-grid-list id="gl-{{folder.id}}" ng-if="(studyguides | filter: {subject: subject.id, folder: folder.id}).length>0" md-cols="2" md-cols-xs="1" md-cols-lg="3" md-cols-xl="5" md-row-height="175px" md-gutter="15px">
-							<md-grid-tile ng-repeat="sg in studyguides | filter: {subject: subject.id, folder: folder.id} | orderBy: sort">
+							<md-grid-tile class="sg" ng-repeat="sg in studyguides | filter: {subject: subject.id, folder: folder.id} | orderBy: sort">
 								<md-card layout-fill md-ink-ripple="#999">
 									<md-card-header ng-click="click(sg.link)" style="padding-top: 10px; padding-bottom: 6px;">
 										<md-card-avatar><img src="{{getImage(sg.link)}}"></md-card-avatar>
@@ -101,10 +99,26 @@
 											<md-icon>thumb_up</md-icon>
 										</md-button>
 										<span margin-right="10px" id="likes" style="margin-left: 0;">{{sg.likes.length}}</span>
-										<md-button ng-disabled="sg.flags.indexOf(uid)!=-1" ng-if="!sg.verified" class="md-icon-button" ng-click="flag(sg.id, sg.flags, uid)">
-											<md-icon>flag</md-icon><md-tooltip md-delay="200">Flag as spam</md-tooltip>
-										</md-button>
-										<md-icon ng-if="sg.verified"><md-tooltip md-delay="200">Verified</md-tooltip>verified_user</md-icon>
+										<md-menu style="margin: 0;">
+											<md-button class="md-icon-button" ng-click="$mdMenu.open($event)" ng-disabled="sg.flags.indexOf(uid)!=-1">
+												<md-icon class="material-icons">flag</md-icon><md-tooltip md-delay="200">Click for options</md-tooltip>
+											</md-button>
+											<md-menu-content>
+												<md-menu-item>
+													<md-button>
+														<md-icon>report</md-icon>
+														Flag as spam
+													</md-button>
+												</md-menu-item>
+												<md-menu-item>
+													<md-button>
+														<md-icon>highlight_off</md-icon>
+														Flag as outdated/unusable
+													</md-button>
+												</md-menu-item>
+											</md-menu-content>
+										</md-menu>
+										<!--<md-icon ng-if="sg.verified"><md-tooltip md-delay="200">Verified</md-tooltip>verified_user</md-icon>-->
 									</md-card-actions>
 								</md-card>
 							</md-grid-tile>
@@ -114,7 +128,7 @@
 				</md-grid-tile>
 			</md-grid-list>
 			<md-grid-list ng-if="(studyguides | filter: {subject: subject.id, folder: '!'}).length>0" md-cols="2" md-cols-xs="1" md-cols-lg="3" md-cols-xl="5" md-row-height="175px" md-gutter="15px">
-				<md-grid-tile ng-repeat="sg in studyguides | filter: {subject: subject.id, folder: '!'} | orderBy: sort">
+				<md-grid-tile class="sg" ng-repeat="sg in studyguides | filter: {subject: subject.id, folder: '!'} | orderBy: sort">
 					<md-card layout-fill md-ink-ripple="#999">
 						<md-card-header ng-click="click(sg.link)" style="padding-top: 10px; padding-bottom: 6px;">
 							<md-card-avatar><img src="{{getImage(sg.link)}}"></md-card-avatar>
@@ -139,10 +153,26 @@
 								<md-icon>thumb_up</md-icon>
 							</md-button>
 							<span margin-right="10px" id="likes" style="margin-left: 0;">{{sg.likes.length}}</span>
-							<md-button ng-disabled="sg.flags.indexOf(uid)!=-1" ng-if="!sg.verified" class="md-icon-button" ng-click="flag(sg.id, sg.flags, uid)">
-								<md-icon>flag</md-icon><md-tooltip md-delay="200">Flag as spam</md-tooltip>
-							</md-button>
-							<md-icon ng-if="sg.verified"><md-tooltip md-delay="200">Verified</md-tooltip>verified_user</md-icon>
+							<md-menu style="margin: 0;">
+								<md-button class="md-icon-button" ng-click="$mdMenu.open($event)" ng-disabled="sg.flags.indexOf(uid)!=-1">
+									<md-icon class="material-icons">flag</md-icon><md-tooltip md-delay="200">Click for options</md-tooltip>
+								</md-button>
+								<md-menu-content>
+									<md-menu-item>
+										<md-button>
+											<md-icon>report</md-icon>
+											Flag as spam
+										</md-button>
+									</md-menu-item>
+									<md-menu-item>
+										<md-button>
+											<md-icon>highlight_off</md-icon>
+											Flag as outdated/unusable
+										</md-button>
+									</md-menu-item>
+								</md-menu-content>
+							</md-menu>
+							<!--<md-icon ng-if="sg.verified"><md-tooltip md-delay="200">Verified</md-tooltip>verified_user</md-icon>-->
 						</md-card-actions>
 					</md-card>
 				</md-grid-tile>
