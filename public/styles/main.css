@@ -1,0 +1,53 @@
+html {
+	overflow: hidden;
+}
+input, textarea {
+	transition: border 150ms;
+	-webkit-transition: border 150ms;
+}
+.md-headline {
+	font-size: 18px; }
+.md-display-1 {
+	font-size: 20px; }
+.md-display-2 {
+	font-size: 24px; }
+.md-display-3 {
+	font-size: 30px; }
+.md-display-4 {
+	font-size: 36px; }
+.md-body-1, .md-body-2 {
+	font-size: 13px;
+	line-height: 18px;
+	}
+.md-ripple-container {
+	background-color: transparent !important;
+}
+.md-container {
+	flex: none;
+}
+md-grid-tile {
+	transition-duration: 150ms;
+	-webkit-transition-duration: 150ms;
+}
+md-select-value {
+	transition-duration: 150ms;
+	-webkit-transition-duration: 150ms;
+}
+md-sidenav {
+	width: 300px;
+}
+md-switch .md-container {
+	cursor: pointer;
+}
+md-switch:not([disabled]) .md-dragging, md-switch:not([disabled]).md-dragging .md-container {
+	cursor: pointer;
+}
+md-switch > * {
+	white-space: normal;
+}
+a._md-nav-button {
+	border-radius: 0;
+}
+md-select-menu md-icon,md-select-value md-icon {
+	margin-right: 8px !important;
+}
