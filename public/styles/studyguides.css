@@ -19,3 +19,21 @@ md-card .md-icon-button:not([disabled]) md-icon {
 md-card .md-icon-button:not([disabled]):hover md-icon {
 	opacity: 0.8;
 }
+md-card md-card-header:first-child md-card-avatar {
+	height: 32px;
+	width: 32px;
+	margin-right: 8px;
+}
+md-card md-card-header-text span {
+	font-size: 12px !important;
+	line-height: 16px !important;
+	overflow-x: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+md-card md-card-title md-card-title-text .md-subhead {
+	font-size: 13px;
+}
+md-card md-card-title md-card-title-text .md-title {
+	font-size: 16px;
+}
