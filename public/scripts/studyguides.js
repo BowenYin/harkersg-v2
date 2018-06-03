@@ -1,116 +1,62 @@
-app.controller("SGControl",function($scope,$rootScope,$mdToast,$mdDialog) {
+app.controller("SGControl", function($scope, $rootScope, $mdToast, $mdDialog) {
   $rootScope.navItem="studyguides";
   $rootScope.pageTitle="Notes / Study Guides";
   $rootScope.tabName="Notes/Study Guides - HarkerSG";
-  $scope.navItem="home";
-  $scope.form={};
+  //$scope.navItem="home";
+  $scope.sgForm={showName: true};
   $scope.folderForm={};
   $scope.sort="-time";
-  $scope.cats=[];
-  auth.onAuthStateChanged(function(user) {
-    if (user) {
-      var email=auth.currentUser.email;
-      if (email.indexOf("@students.harker.org")!=-1) {
-        var today=new Date();
-        var grad=new Date("07/01/20"+email.substring(0,2));
-        var diff=new Date(Date.UTC(grad.getFullYear(), grad.getMonth(), grad.getDate())-Date.UTC(today.getFullYear(), today.getMonth(), today.getDate())).getUTCFullYear()-1970;
-        if (diff<4)
-          $scope.cats=["math","eng","sci","hist","lang","uso"];
-        else if (diff<5)
-          $scope.cats=["8th","mso"];
-        else if (diff<6)
-          $scope.cats=["7th","mso"];
-        else if (diff<7)
-          $scope.cats=["6th","mso"];
-      }
-    }
-  });
-  var cookies=document.cookie.split("; ");
-  fs.collection("studyguides").onSnapshot(function(querySnapshot) {
-    $scope.studyguides=[];
-    querySnapshot.forEach(function(doc) {
-      var data=doc.data();
-      data.id=doc.id;
-      $scope.studyguides.push(data);
-    });
-    for (var i=0; i<cookies.length; i++) {
-      if (cookies[i].split("=")[0]=="countSG") {
-        var cookie=cookies[i].split("=")[1];
-        var len=$scope.studyguides.length;
-        if (parseInt(cookie)==len) {
-          $scope.newSG="+0";
-          $scope.newSGColor="gray";
-        }
-        else if (parseInt(cookie)<len) {
-          var x=len-cookie;
-          $scope.newSG="⬆ +"+x;
-          $scope.newSGColor="green";
-        }
-        else if (parseInt(cookie)>len) {
-          var x=cookie-len;
-          $scope.newSG="⬇ -"+x;
-          $scope.newSGColor="red";
-        }
-      }
-    }
-    $scope.$apply();
-    document.cookie="countSG="+$scope.studyguides.length+"; expires=Fri, 31 Dec 9999 12:00:00 UTC";
-  });
   $scope.hoverFx=function() {
     $("md-grid-tile").hover(
       function() {$(this).addClass("md-whiteframe-3dp");},
       function() {$(this).removeClass("md-whiteframe-3dp");}
     );
   };
-  $scope.clear=function() {
-    $scope.form.title=undefined;
-    $scope.form.link=undefined;
-    $scope.form.subject=undefined;
-    $scope.form.folder=undefined;
-    $scope.form.honor=undefined;
+  $scope.clearSG=function() {
+    $scope.sgForm={showName: $scope.sgForm.showName};
     $scope.addSG.$setPristine();
     $scope.addSG.$setUntouched();
+    setTimeout(function() {$scope.$broadcast("md-resize-textarea");}, 100);
   };
-  $scope.submit=function() {
+  $scope.submitSG=function() {
     if ($scope.addSG.$valid) {
-      if ($scope.form.folder==undefined || $scope.form.folder=="None")
-        $scope.form.folder=null;
-      fs.collection("studyguides").add({
-        title: $scope.form.title,
-        subject: $scope.form.subject.id,
-        folder: $scope.form.folder,
-        time: new Date(),
-        user: fs.collection("users").doc($scope.uid),
-        link: $scope.form.link,
-        likes: [],
-        flags: [],
-        teachers: [],
-        verified: false
-      })
-      .then(function(doc) {
+      $scope.sgLoading=true;
+      if ($scope.sgForm.folder==undefined) $scope.sgForm.folder=null;
+      $scope.sgForm.info=$scope.sgForm.info || "";
+      var addSG=functions.httpsCallable("addSG");
+      addSG({
+        title: $scope.sgForm.title,
+        info: $scope.sgForm.info,
+        course: $scope.sgForm.course,
+        folder: $scope.sgForm.folder,
+        url: $scope.sgForm.url,
+        honorCode: $scope.sgForm.honorCode,
+        showName: $scope.sgForm.showName,
+      }).then(function(result) {
         $mdToast.show(
           $mdToast.simple()
-            .textContent("Successfully submitted ID# "+doc.id)
+            .textContent("Successfully added study guide to "+$scope.sgForm.course+".")
             .hideDelay(4000)
             .action("OK")
             .highlightAction(true)
         );
-      })
-      .catch(function(error) {
+        setTimeout(function() {
+          document.activeElement.blur();
+          $scope.clearSG();
+        }, 100);
+      }).catch(function(error) {
         console.error(error);
         $mdToast.show(
           $mdToast.simple()
-            .textContent("An error has occurred.")
+            .textContent("An unexpected error has occurred.")
             .hideDelay(4000)
             .action("OK")
             .highlightAction(true)
         );
+      }).finally(function() {
+        $scope.sgLoading=false;
       });
-			setTimeout(function() {
-				document.activeElement.blur();
-      	$scope.clear();
-			}, 100);
-    } else if (!$scope.form.honor) {
+    } else if (!$scope.sgForm.honorCode) {
       document.getElementById("honor-sg").classList.add("md-focused");
       $mdToast.show(
         $mdToast.simple()
@@ -120,59 +66,41 @@ app.controller("SGControl",function($scope,$rootScope,$mdToast,$mdDialog) {
     }
   };
   $scope.clearFolder=function() {
-    $scope.folderForm.name=undefined;
-    $scope.folderForm.subject=undefined;
+    $scope.folderForm={};
     $scope.addFolder.$setPristine();
     $scope.addFolder.$setUntouched();
   };
   $scope.submitFolder=function() {
     if ($scope.addFolder.$valid) {
-      $scope.showLoader=true;
-      var now=new Date();
-      var str=now.toString();
-      now=str.substr(0,24)+"."+now.getMilliseconds()+str.substr(24);
-      var folder;
-      for (var i=0; i<$scope.subjects.length; i++) {
-        if ($scope.subjects[i].id==$scope.folderForm.subject.id) {
-          folder=$scope.subjects[i].folders || [];
-          for (var j=0; j<folder.length; j++) {
-            delete folder[j].$$hashKey;
-            delete folder[j].rows;
-            delete folder[j].smCols;
-            delete folder[j].mdCols;
-            delete folder[j].lgCols;
-          }
-          break;
-        }
-      }
-      console.log(folder.concat({id: now, name: $scope.folderForm.name, user: fs.collection("users").doc($scope.uid)}));
-      fs.collection("subjects").doc($scope.folderForm.subject.id).update({
-        folders: folder.concat({id: now, name: $scope.folderForm.name, user: fs.collection("users").doc($scope.uid)})
-      })
-      .then(function(doc) {
+      $scope.folderLoading=true;
+      var addFolder=functions.httpsCallable("addFolder");
+      addFolder({
+        course: $scope.folderForm.course,
+        title: $scope.folderForm.title,
+      }).then(function(result) {
         $mdToast.show(
           $mdToast.simple()
-            .textContent("Successfully added folder.")
+            .textContent("Successfully added folder to "+$scope.folderForm.course+".")
             .hideDelay(4000)
             .action("OK")
             .highlightAction(true)
         );
-      })
-      .catch(function(error) {
+        setTimeout(function() {
+          document.activeElement.blur();
+          $scope.clearFolder();
+        }, 100);
+      }).catch(function(error) {
         console.error(error);
         $mdToast.show(
           $mdToast.simple()
-            .textContent("An error has occurred.")
+            .textContent("An unexpected error has occurred.")
             .hideDelay(4000)
             .action("OK")
             .highlightAction(true)
         );
+      }).finally(function() {
+        $scope.folderLoading=false;
       });
-			setTimeout(function() {
-				document.activeElement.blur();
-      	$scope.clearFolder();
-        $scope.showLoader=false;
-			}, 100);
     }
   };
   $scope.click=function(link) {
@@ -244,7 +172,7 @@ app.controller("SGControl",function($scope,$rootScope,$mdToast,$mdDialog) {
     else
       return "/images/link.png";
   };
-	function TeachersControl($scope,$mdDialog,sg) {
+	function TeachersControl($scope, $mdDialog, sg) {
 		$scope.tsg=sg;
     $scope.teachers=sg.teachers.slice();
 		$scope.cancel=function() {
@@ -299,15 +227,7 @@ app.controller("SGControl",function($scope,$rootScope,$mdToast,$mdDialog) {
       });
     }
 	};
-  $scope.togglePin=function(subj) {
-    var i=$scope.settings.subjects.indexOf(subj);
-    if (i!=-1)
-      $scope.settings.subjects.splice(i,1);
-    else
-      $scope.settings.subjects.push(subj);
-    fs.collection("users").doc($scope.uid).update({"settings.subjects": $scope.settings.subjects});
-  };
-  $scope.toggleFolder=function(folder,count) {
+  $scope.toggleFolder=function(folder, count) {
     folder.mdCols=3-(folder.mdCols||1);
     folder.smCols=2-(folder.smCols||1);
     folder.lgCols=5-(folder.lgCols||1);
@@ -318,7 +238,4 @@ app.controller("SGControl",function($scope,$rootScope,$mdToast,$mdDialog) {
 		return function(item) {return $scope.cats.length==0 || $scope.cats.indexOf(item.cat)!=-1;};
 	};
 });
-app.controller("FormSubjectControl",function($element) {
-  $element.find('input').on('keydown',function(ev) {ev.stopPropagation();});
-});
-applyTemplate=function(msg) {return;};
+//applyTemplate=function(msg) {return;};

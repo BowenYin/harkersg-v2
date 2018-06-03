@@ -3,11 +3,11 @@
 	<md-toolbar style="z-index: 3;"><md-subheader>
 		<div layout="column" layout-gt-xs="row">
 			<div flex layout="row">
-				<md-autocomplete flex md-items="subject in subjects | filter: {'id': search}" placeholder="Jump to a subject..." md-search-text="search" md-clear-button="true" md-select-on-match="true" md-match-case-insensitive="true" md-item-text="subject.id">
+				<md-autocomplete flex md-items="course in courses" id="| filter: {'id': search}" placeholder="Jump to a course..." md-search-text="search" md-clear-button="true" md-select-on-match="true" md-match-case-insensitive="true" md-item-text="course.id">
 					<md-item-template>
-						<span md-highlight-text="search" md-highlight-flags="gi">{{subject.id}}</span>
+						<span md-highlight-text="search" md-highlight-flags="gi">{{course.id}}</span>
 					</md-item-template>
-					<md-not-found>No subjects found. To suggest a new one, contact me.</md-not-found>
+					<md-not-found>No courses found. To suggest a new one, contact me.</md-not-found>
 				</md-autocomplete>
 				<span class="md-body-1" layout-padding>Total SGs:<span id="counter" class="md-body-2">{{studyguides.length||"--"}}</span><span class="md-body-1" style="color: {{newSGColor||gray}};">{{newSG}}</span></span>
 			</div>
@@ -44,49 +44,46 @@
 	</md-subheader></md-toolbar>
 	<md-content layout-margin layout-padding ng-if="!signedIn"><md-icon>info</md-icon>Please sign in to access study guides.</md-content>
 	<md-progress-circular md-mode="indeterminate" ng-if="!loaded" style="margin: 0 auto;"></md-progress-circular>
-	<img src="images/harker.gif" ng-if="!loaded" height="10%" style="margin-left: 50%">
-	<section ng-repeat="subject in subjects | filter: filterSG() | filter: {id: search}" ng-mouseenter="hoverFx()">
+	<!-- COURSE -->
+	<section ng-repeat="(name, course) in courses" ng-mouseenter="hoverFx()">
 		<md-subheader class="md-whiteframe-2dp" layout="row">
 			<div layout="row">
-				<span class="md-subhead">{{subject.id}}</span>
-				<span flex></span>
-				<span>
-					<md-tooltip md-delay="100" md-direction="left">Pin to top</md-tooltip>
-					<md-checkbox style="margin-bottom: 0px;" ng-checked="settings.subjects.indexOf(subject.id)!=-1" ng-click="togglePin(subject.id)" aria-label="pin"></md-checkbox>
-				</span>
+				<span class="md-subhead" style="text-transform: uppercase;">{{name}}</span>
 			</div>
 		</md-subheader>
 		<md-content layout-margin layout="column">
-			<md-grid-list ng-if="subject.folders.length>0" md-cols="1" md-cols-gt-sm="2" md-cols-xl="4" md-row-height="50px" md-gutter="10px" style="z-index: 1;">
-				<md-grid-tile ng-repeat="folder in subject.folders" md-colspan="{{folder.smCols}}" md-colspan-gt-sm="{{folder.mdCols}}" md-colspan-xl="{{folder.lgCols}}" md-rowspan="{{folder.rows}}">
+			<md-grid-list ng-if="course.folders.length>0" md-cols="1" md-cols-gt-sm="2" md-cols-xl="4" md-row-height="50px" md-gutter="10px" style="z-index: 1;">
+				<!-- FOLDER -->
+				<md-grid-tile ng-repeat="folder in course.folders" md-colspan="{{folder.smCols}}" md-colspan-gt-sm="{{folder.mdCols}}" md-colspan-xl="{{folder.lgCols}}" md-rowspan="{{folder.rows}}">
 					<div layout="column" layout-fill style="overflow: hidden; border: 1px solid #AAA;">
 						<md-card layout="row" style="min-height: 50px; height: 50px; width: 100%; margin: 0; background-color: lightgray; color: black;">
-							<md-card-title flex class="flipper" style="padding-top: 8px; padding-bottom: 8px;" ng-click="toggleFolder(folder, (studyguides | filter: {subject: subject.id, folder: folder.id}).length)">
+							<md-card-title flex class="flipper" style="padding-top: 8px; padding-bottom: 8px;" ng-click="toggleFolder(folder, Object.keys(folder.sg).length)">
 								<md-card-title-text style="overflow-x: hidden;">
-									<span class="md-headline">{{folder.name}}</span>
+									<span class="md-headline">{{folder.title}}</span>
 								</md-card-title-text>
 							</md-card-title>
 							<md-card-actions layout="column" layout-align="start center">
-								<span class="md-caption">{{(studyguides | filter: {subject: subject.id, folder: folder.id}).length}} SG<span ng-if="(studyguides | filter: {subject: subject.id, folder: folder.id}).length!=1">s</span></span>
-								<md-button class="md-icon-button" md-no-ink style="padding-top: 0; margin-top: 0;" ng-click="toggleFolder(folder, (studyguides | filter: {'subject': subject.id, 'folder': folder.id}).length)">
+								<span class="md-caption">{{Object.keys(folder.sg).length}} SG<span ng-if="Object.keys(folder.sg).length!=1">s</span></span>
+								<md-button class="md-icon-button" md-no-ink style="padding-top: 0; margin-top: 0;" ng-click="toggleFolder(folder, Object.keys(folder.sg).length)">
 									<md-icon id="flip-{{folder.id}}" class="material-icons">expand_more</md-icon>
 								</md-button>
 							</md-card-actions>
 						</md-card>
-						<md-grid-list id="gl-{{folder.id}}" ng-if="(studyguides | filter: {subject: subject.id, folder: folder.id}).length>0" md-cols="2" md-cols-xs="1" md-cols-lg="3" md-cols-xl="5" md-row-height="175px" md-gutter="15px">
-							<md-grid-tile class="sg" ng-repeat="sg in studyguides | filter: {subject: subject.id, folder: folder.id} | orderBy: sort">
+						<md-grid-list id="gl-{{folder.id}}" ng-if="Object.keys(folder.sg).length>0" md-cols="2" md-cols-xs="1" md-cols-lg="3" md-cols-xl="5" md-row-height="175px" md-gutter="15px">
+							<!-- FOLDER SG -->
+							<md-grid-tile class="sg" ng-repeat="sg in folder.sg | orderBy: sort">
 								<md-card layout-fill md-ink-ripple="#999">
-									<md-card-header ng-click="click(sg.link)" style="padding-top: 10px; padding-bottom: 6px;">
-										<md-card-avatar><img src="{{getImage(sg.link)}}"></md-card-avatar>
+									<md-card-header ng-click="click(sg.url)" style="padding-top: 10px; padding-bottom: 6px;">
+										<md-card-avatar><img src="{{getImage(sg.url)}}"></md-card-avatar>
 										<md-card-header-text style="overflow: hidden;">
-											<span style="overflow-x: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: normal;" class="md-body-1">{{sg.link}}</span>
+											<span style="overflow-x: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: normal;" class="md-body-1">{{sg.url}}</span>
 											<span class="md-subhead">Added {{sg.time.toLocaleDateString()}}</span>
 										</md-card-header-text>
 									</md-card-header>
-									<md-card-title style="padding: 0 14px;" ng-click="click(sg.link)">
+									<md-card-title style="padding: 0 14px;" ng-click="click(sg.url)">
 										<md-card-title-text style="overflow-x: hidden;">
 											<span class="md-title">{{sg.title}}</span>
-											<span class="md-subhead">Teachers: <i>{{sg.teachers.join(", ")}}</i></span>
+											<span class="md-subhead">{{sg.info}}</i></span>
 										</md-card-title-text>
 									</md-card-title>
 									<md-card-actions style="margin-top: 0; margin-bottom: 2px;" layout="row" layout-align="start end" layout-margin>
@@ -123,24 +120,25 @@
 								</md-card>
 							</md-grid-tile>
 						</md-grid-list>
-						<span layout-padding ng-if="(studyguides | filter: {subject: subject.id, folder: folder.id}).length==0"><i>Empty Folder</i></span>
+						<span layout-padding ng-if="(studyguides | filter: {course: course.id, folder: folder.id}).length==0"><i>Empty Folder</i></span>
 					</div>
 				</md-grid-tile>
 			</md-grid-list>
-			<md-grid-list ng-if="(studyguides | filter: {subject: subject.id, folder: '!'}).length>0" md-cols="2" md-cols-xs="1" md-cols-lg="3" md-cols-xl="5" md-row-height="175px" md-gutter="15px">
-				<md-grid-tile class="sg" ng-repeat="sg in studyguides | filter: {subject: subject.id, folder: '!'} | orderBy: sort">
+			<md-grid-list ng-if="course.sg.length>0" md-cols="2" md-cols-xs="1" md-cols-lg="3" md-cols-xl="5" md-row-height="175px" md-gutter="15px">
+				<!-- NON-FOLDER SG -->
+				<md-grid-tile class="sg" ng-repeat="sg in course.sg | orderBy: sort">
 					<md-card layout-fill md-ink-ripple="#999">
-						<md-card-header ng-click="click(sg.link)" style="padding-top: 10px; padding-bottom: 6px;">
-							<md-card-avatar><img src="{{getImage(sg.link)}}"></md-card-avatar>
+						<md-card-header ng-click="click(sg.url)" style="padding-top: 10px; padding-bottom: 6px;">
+							<md-card-avatar><img src="{{getImage(sg.url)}}"></md-card-avatar>
 							<md-card-header-text style="overflow: hidden;">
-								<span style="overflow-x: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: normal;" class="md-body-1">{{sg.link}}</span>
-								<span class="md-subhead">Added {{sg.time.toLocaleDateString()}}</span>
+								<span class="md-body-1">{{sg.url}}</span>
+								<span class="md-subhead">Added {{sg.time.toLocaleDateString()}} • {{sg.name}}</span>
 							</md-card-header-text>
 						</md-card-header>
-						<md-card-title style="padding: 0 14px;" ng-click="click(sg.link)">
+						<md-card-title style="padding: 0 14px;" ng-click="click(sg.url)">
 							<md-card-title-text style="overflow-x: hidden;">
 								<span class="md-title">{{sg.title}}</span>
-								<span class="md-subhead">Teachers: <i>{{sg.teachers.join(", ")}}</i></span>
+								<span class="md-subhead">{{sg.info}}</i></span>
 							</md-card-title-text>
 						</md-card-title>
 						<md-card-actions style="margin-top: 0; margin-bottom: 2px;" layout="row" layout-align="start end" layout-margin>
@@ -167,12 +165,11 @@
 									<md-menu-item>
 										<md-button>
 											<md-icon>highlight_off</md-icon>
-											Flag as outdated/unusable
+											Mark as outdated/unusable
 										</md-button>
 									</md-menu-item>
 								</md-menu-content>
 							</md-menu>
-							<!--<md-icon ng-if="sg.verified"><md-tooltip md-delay="200">Verified</md-tooltip>verified_user</md-icon>-->
 						</md-card-actions>
 					</md-card>
 				</md-grid-tile>
@@ -186,7 +183,9 @@
 <md-sidenav layout="column" md-component-id="right" class="md-sidenav-right" md-is-locked-open="$mdMedia('gt-sm')" md-whiteframe="5">
 	<md-tabs md-stretch-tabs="always" md-border-bottom md-dynamic-height md-swipe-content>
 		<md-tab label="Study Guide">
-			<md-content layout-padding>
+			<!-- ADD SG -->
+			<md-progress-linear ng-disabled="!sgLoading" md-mode="indeterminate"></md-progress-linear>
+			<md-content layout-margin>
 				<h3 class="md-title">Add Notes/Study Guide</h3>
 				<form name="addSG">
 					<md-tooltip ng-if="!allowed" md-delay="200" md-direction="top">Sign in with a school account to add study guides.</md-tooltip>
@@ -194,56 +193,63 @@
 					<md-input-container class="md-block">
 						<label>Title</label>
 						<md-icon>text_fields</md-icon>
-						<input type="text" name="title" ng-model="form.title" md-maxlength="40" maxlength="40" minlength="5" required md-no-asterisk ng-disabled="!allowed||flags>3">
+						<input type="text" name="title" ng-model="sgForm.title" md-maxlength="50" minlength="5" required md-no-asterisk ng-disabled="!allowed||flags>3">
 						<div ng-messages="addSG.title.$error" ng-if="addSG.title.$touched">
 							<div ng-message="md-maxlength">Title is too long.</div>
 							<div ng-message="required">Required.</div>
 						</div>
 					</md-input-container>
 					<md-input-container class="md-block">
+						<label>Description (optional)</label>
+						<md-icon>subject</md-icon>
+						<textarea name="info" ng-model="sgForm.info" md-maxlength="100" ng-disabled="!allowed||flags>3" md-no-resize max-rows="3"></textarea>
+						<div ng-messages="addSG.info.$error" ng-if="addSG.info.$touched">
+							<div ng-message="md-maxlength">Description is too long.</div>
+						</div>
+					</md-input-container>
+					<md-input-container class="md-block">
 						<label>Link</label>
 						<md-icon>link</md-icon>
-						<input type="url" name="link" ng-model="form.link" required md-no-asterisk minlength="24" maxlength="299" ng-pattern="/^.+\..+$/" ng-disabled="!allowed||flags>3">
-						<div ng-messages="addSG.link.$error" ng-if="addSG.link.$touched">
+						<input type="url" name="url" ng-model="sgForm.url" required md-no-asterisk minlength="18" ng-maxlength="250" ng-pattern="/^.+\..+$/" ng-disabled="!allowed||flags>3">
+						<div ng-messages="addSG.url.$error" ng-if="addSG.url.$touched">
 							<div ng-message="required">Required.</div>
 							<div ng-message="pattern">Please enter a valid URL.</div>
-							<div ng-message-exp="['minlength','maxlength']">Not a notes/study guide URL.</div>
+							<div ng-message-exp="['minlength', 'maxlength']">Not a notes/study guide URL.</div>
 						</div>
 					</md-input-container>
-					<md-input-container ng-controller="FormSubjectControl" class="md-block">
+					<md-input-container class="md-block">
 						<label>Subject</label>
 						<md-icon>class</md-icon>
-						<md-select name="subject" ng-model="form.subject" required md-no-asterisk ng-disabled="!allowed||flags>3">
-							<md-select-header style="box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.1), 0 0 0 0 rgba(0, 0, 0, 0.14), 0 0 0 0 rgba(0, 0, 0, 0.12); padding-left: 11px; height: 48px; cursor: pointer; position: relative; display: flex; align-items: center; width: auto;">
-								<input ng-model="form.subjectSearch" type="search" placeholder="Search" style="border: none; outline: none; height: 100%; width: 100%; padding: 0;" class="md-text" md-select-on-focus autofocus>
-							</md-select-header>
-							<md-option ng-value="subject" ng-repeat="subject in subjects | filter: {id: form.subjectSearch}">{{subject.id}}</md-option>
+						<md-select name="course" ng-model="sgForm.course" required md-no-asterisk ng-disabled="!allowed||flags>3">
+							<md-option ng-value="id" ng-repeat="(id, course) in courses">{{id}}</md-option>
 						</md-select>
-						<div ng-messages="addSG.subject.$error" ng-if="addSG.subject.$touched">
+						<div ng-messages="addSG.course.$error" ng-if="addSG.course.$touched">
 							<div ng-message="required">Required.</div>
 						</div>
 					</md-input-container>
-					<md-input-container class="md-block" ng-if="form.subject!=undefined">
+					<md-input-container class="md-block" ng-if="sgForm.course!=undefined">
 						<label>Folder</label>
 						<md-icon>folder</md-icon>
-						<md-select name="folder" ng-model="form.folder" ng-disabled="!allowed||flags>3">
+						<md-select name="folder" ng-model="sgForm.folder" ng-disabled="!allowed||flags>3">
 							<md-option md-option-empty><i>None</i></md-option>
-							<md-option ng-value="folder.id" ng-repeat="folder in form.subject.folders">{{folder.name}}</md-option>
+							<md-option ng-value="folder.title" ng-repeat="folder in courses[sgForm.course].folders">{{folder.title}}</md-option>
 						</md-select>
 					</md-input-container>
-					<md-checkbox id="honor-sg" ng-model="form.honor" required><span class="md-body-1">I abide by the Harker Honor Code by submitting this resource.</span></md-checkbox>
-					<md-button type="submit" ng-click="submit()" ng-disabled="!allowed||flags>3" class="md-primary md-raised">Submit</md-button>
-					<md-button type="reset" ng-click="clear()">Clear</md-button>
-					<md-content class="md-caption" layout-margin>
+					<md-switch ng-model="sgForm.showName" name="show name" ng-disabled="!allowed||flags>3" style="margin-left: 0;"><span class="md-body-1 md-label">Display my name along with this submitted study guide.</span></md-switch>
+					<md-checkbox id="honor-sg" ng-model="sgForm.honorCode" required><span class="md-body-1">I abide by the Harker Honor Code by submitting this resource.</span></md-checkbox>
+					<md-button type="submit" ng-click="submitSG()" ng-disabled="!allowed||flags>3" class="md-primary md-raised">Submit</md-button>
+					<md-button type="reset" ng-click="clearSG()">Clear</md-button>
+					<md-content class="md-caption">
 						<p>Your notes/study guide must allow access to all members of the school community.</p>
-						<p>Note: Your account will be automatically disabled if multiple submissions are flagged.</p>
+						<!--<p>Note: Your account will be automatically disabled if multiple submissions are flagged.</p>-->
 					</md-content>
 				</form>
 			</md-content>
 		</md-tab>
 		<md-tab label="Folder" ng-disabled="flags>1">
-			<md-progress-linear ng-if="showLoader" md-mode="indeterminate"></md-progress-linear>
-			<md-content layout-padding>
+			<!-- ADD FOLDER -->
+			<md-progress-linear ng-disabled="!folderLoading" md-mode="indeterminate"></md-progress-linear>
+			<md-content layout-margin>
 				<h3 class="md-title">Add a Folder</h3>
 				<form name="addFolder">
 					<md-tooltip ng-if="!allowed" md-delay="200" md-direction="top">Sign in with a school account to add folders.</md-tooltip>
@@ -251,30 +257,27 @@
 					<md-input-container class="md-block">
 						<label>Folder Name</label>
 						<md-icon>folder</md-icon>
-						<input type="text" name="name" ng-model="folderForm.name" md-maxlength="25" maxlength="25" minlength="5" required md-no-asterisk ng-disabled="!allowed||flags>1">
-						<div ng-messages="addFolder.name.$error" ng-if="addFolder.name.$touched">
+						<input type="text" name="title" ng-model="folderForm.title" md-maxlength="25" maxlength="25" minlength="4" required md-no-asterisk ng-disabled="!allowed||flags>1">
+						<div ng-messages="addFolder.title.$error" ng-if="addFolder.title.$touched">
 							<div ng-message="md-maxlength">Folder name is too long.</div>
 							<div ng-message="required">Required.</div>
 						</div>
 					</md-input-container>
-					<md-input-container ng-controller="FormSubjectControl" class="md-block">
+					<md-input-container class="md-block">
 						<label>Subject</label>
 						<md-icon>class</md-icon>
-						<md-select name="subject" ng-model="folderForm.subject" required md-no-asterisk ng-disabled="!allowed||flags>1">
-							<md-select-header style="box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.1), 0 0 0 0 rgba(0, 0, 0, 0.14), 0 0 0 0 rgba(0, 0, 0, 0.12); padding-left: 11px; height: 48px; cursor: pointer; position: relative; display: flex; align-items: center; width: auto;">
-								<input ng-model="folderForm.subjectSearch" type="search" placeholder="Search" style="border: none; outline: none; height: 100%; width: 100%; padding: 0;" class="md-text" md-select-on-focus autofocus>
-							</md-select-header>
-							<md-option ng-value="subject" ng-repeat="subject in subjects | filter: {id: folderForm.subjectSearch}">{{subject.id}}</md-option>
+						<md-select name="course" ng-model="folderForm.course" required md-no-asterisk ng-disabled="!allowed||flags>1">
+							<md-option ng-value="id" ng-repeat="(id, course) in courses">{{id}}</md-option>
 						</md-select>
-						<div ng-messages="addFolder.subject.$error" ng-if="addFolder.subject.$touched">
+						<div ng-messages="addFolder.course.$error" ng-if="addFolder.course.$touched">
 							<div ng-message="required">Required.</div>
 						</div>
 					</md-input-container>
 					<md-button type="submit" ng-click="submitFolder()" ng-disabled="!allowed||flags>1" class="md-primary md-raised">Submit</md-button>
 					<md-button type="reset" ng-click="clearFolder()">Clear</md-button>
-					<md-content class="md-caption" layout-margin>
+					<md-content class="md-caption">
 						<p>Folder Guidelines: Folder names should be general and broad, like "Short Story Unit."</p>
-						<p>Folders will automatically appear under the subject you have selected.</p>
+						<p>Folders will automatically appear under the course you have selected.</p>
 						<p>Note: You will receive additional flags if you submit spam.</p>
 					</md-content>
 				</form>

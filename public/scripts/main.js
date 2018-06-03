@@ -1,14 +1,14 @@
-app.controller("HomeControl",function($scope,$rootScope) {
+app.controller("HomeControl", function($scope, $rootScope) {
 	$rootScope.navItem="home";
 	$rootScope.pageTitle="HarkerSG Home";
 	$rootScope.tabName="HarkerSG Home";
 });
-app.controller("NFControl",function($rootScope) {
+app.controller("NFControl", function($rootScope) {
 	$rootScope.navItem=null;
 	$rootScope.pageTitle="404 Page Not Found";
 	$rootScope.tabName="Page Not Found - HarkerSG";
 });
-app.controller("SettingsControl",function($rootScope,$scope,$mdToast) {
+app.controller("SettingsControl", function($rootScope, $scope, $mdToast) {
 	$rootScope.navItem=null;
 	$rootScope.pageTitle="User Settings";
 	$rootScope.tabName="Settings - HarkerSG";
@@ -61,17 +61,17 @@ app.controller("SettingsControl",function($rootScope,$scope,$mdToast) {
 				.highlightAction(true)
 				.position("top right")
 		).then(function(response) {
-			if (response=="ok")
+			if (response==="ok")
 				window.location.reload(false);
 		});
 	};
 });
-app.controller("AboutControl",function($rootScope) {
+app.controller("AboutControl", function($rootScope) {
 	$rootScope.navItem="about";
 	$rootScope.pageTitle="About / Changelog";
 	$rootScope.tabName="About - HarkerSG";
 });
-app.controller("FeedbackControl",function($scope,$rootScope,$mdToast) {
+app.controller("FeedbackControl", function($scope, $rootScope, $mdToast) {
 	$rootScope.navItem="feedback";
 	$rootScope.pageTitle="User Feedback";
 	$rootScope.tabName="Feedback - HarkerSG";
@@ -83,7 +83,7 @@ app.controller("FeedbackControl",function($scope,$rootScope,$mdToast) {
 			fs.collection("feedback").add({
 				type: $scope.fb.type,
 				text: $scope.fb.text,
-				user: fs.collection("users").doc($scope.uid)
+				user: fs.collection("users").doc($scope.uid),
 			})
 				.then(function(doc) {
 					$mdToast.show(
@@ -112,7 +112,7 @@ app.controller("FeedbackControl",function($scope,$rootScope,$mdToast) {
 		}
 	};
 });
-app.controller("AdsControl",function($scope,$rootScope) {
+app.controller("AdsControl", function($scope, $rootScope) {
 	$rootScope.navItem=null;
 	$rootScope.pageTitle="Submit an Advertisement";
 	$rootScope.tabName="Advertisements - HarkerSG";
