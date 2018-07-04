@@ -1,159 +1,160 @@
 <!DOCTYPE html>
 <html ng-app="App" lang="en">
 <head>
-	<base href="/">
-	<title ng-bind="tabName"></title>
-	<meta charset="utf-8">
-	<meta name="keywords" content="HarkerSG, harker school, bowenyin.tk, harker study guides, study guides, Harker, app.bowenyin.tk">
-	<meta name="description" content="Student-contributed notes and study guides for Harker School courses.">
-	<meta name="author" content="Bowen Yin">
-	<meta name="viewport" content="width=device-width">
-	<link rel="shortcut icon" href="/images/favicon.png">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
-	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.9/angular-material.min.css">
-	<link rel="stylesheet" href="/styles/main.css">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	<meta name="google-signin-client_id" content="978510109102-3mompmb5s816pld0anjl213h1rqoldcn.apps.googleusercontent.com">
-	<meta name="google-signin-cookiepolicy" content="single_host_origin">
-	<meta name="google-signin-scope" content="profile email">
-	<script>
-		window.ga=window.ga||function() {(ga.q=ga.q||[]).push(arguments)}; ga.l=+new Date;
-		ga("create", "UA-77014825-5", "auto");
-		ga("require", "maxScrollTracker", {maxScrollMetricIndex: 3});
-		ga("require", "outboundLinkTracker");
-		ga("require", "urlChangeTracker");
-		ga("require", "pageVisibilityTracker", {visibleThreshold: 1000, sendInitialPageview: true, pageLoadsMetricIndex: 2, visibleMetricIndex: 1});
-	</script>
-	<script async src="https://www.google-analytics.com/analytics.js"></script>
-	<script async src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js"></script>
+  <base href="/">
+  <title ng-bind="tabName"></title>
+  <meta charset="utf-8">
+  <meta name="keywords" content="HarkerSG, harker school, bowenyin.tk, harker study guides, study guides, Harker, app.bowenyin.tk, sg.harker.cf">
+  <meta name="description" content="Student-contributed notes and study guides for Harker School courses.">
+  <meta name="author" content="Bowen Yin">
+  <meta name="viewport" content="width=device-width">
+  <link rel="shortcut icon" href="/images/favicon.png">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,400,500,700,400italic">
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.10/angular-material.min.css">
+  <link rel="stylesheet" href="/styles/main.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <meta name="google-signin-client_id" content="978510109102-3mompmb5s816pld0anjl213h1rqoldcn.apps.googleusercontent.com">
+  <meta name="google-signin-cookiepolicy" content="single_host_origin">
+  <meta name="google-signin-scope" content="profile email">
+  <script>
+    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+    ga("create", "UA-77014825-5", "auto");
+    ga("require", "maxScrollTracker", {maxScrollMetricIndex: 3});
+    ga("require", "outboundLinkTracker");
+    ga("require", "urlChangeTracker");
+    ga("require", "pageVisibilityTracker", {visibleThreshold: 1000, sendInitialPageview: true, pageLoadsMetricIndex: 2, visibleMetricIndex: 1});
+  </script>
+  <script async src="https://www.google-analytics.com/analytics.js"></script>
+  <script async src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js"></script>
 </head>
 <body ng-controller="MainControl as ctrl" layout="row" ng-cloak>
-	<md-sidenav md-component-id="left" class="md-sidenav-left" md-whiteframe="5">
-		<md-list-item hide-gt-xs class="md-2-line" id="user-info-l" flex="none" layout-align="end center" style="display: none;">
-			<img id="profile-pic-l" alt="avatar" class="md-avatar" src="/images/profile-pic.jpg">
-			<div class="md-list-item-text">
-				<h3 id="user-name-l"></h3>
-				<h4>{{flags}} flag<span ng-if="flags!=1">s</span></h4>
-			</div>
-			<md-menu class="md-secondary" md-offset="0 55">
-				<md-button class="md-icon-button"><md-icon class="material-icons">arrow_drop_down</md-icon></md-button>
-				<md-menu-content width="3">
-					<md-menu-item>
-						<md-button disabled><md-icon>person</md-icon>Profile</md-button>
-					</md-menu-item>
-					<md-menu-item>
-						<md-button ng-href="/settings" ng-click="reset()"><md-icon>settings</md-icon>Settings</md-button>
-					</md-menu-item>
-					<md-menu-divider></md-menu-divider>
-					<md-menu-item>
-						<md-button onclick="signOut()"><md-icon>exit_to_app</md-icon>Sign Out</md-button>
-					</md-menu-item>
-				</md-menu-content>
-			</md-menu>
-		</md-list-item>
-		<md-content>
-			<md-list>
-				<md-list-item ng-href="/settings" ng-click="toggleLeftMenu(); reset();">
-					<div class="md-list-item-content">
-						<md-icon layout-padding>settings</md-icon>
-						<span>Settings</span>
-					</div>
-				</md-list-item>
-				<md-list-item ng-href="/ads" ng-click="toggleLeftMenu(); reset();">
-					<div class="md-list-item-content">
-						<md-icon layout-padding>forum</md-icon>
-						<span>Advertisements</span>
-					</div>
-				</md-list-item>
-			</md-list>
-			<div layout-padding layout-margin>
-				<code>v2.0.0</code>
-				<div align="center" id="copyright" class="md-button"><md-icon>code</md-icon> © 2018 Bowen Yin</div>
-			</div>
-		</md-content>
-	</md-sidenav>
-	<div flex layout="column">
-		<md-toolbar>
-			<div class="md-toolbar-tools">
-				<md-button class="md-icon-button" aria-label="menu" ng-click="toggleLeftMenu()">
-					<md-icon>menu</md-icon>
-				</md-button>
-				<md-truncate flex>{{pageTitle}}</md-truncate>
-				<md-list-item hide-xs class="md-2-line" id="user-info-r" flex="none" layout-align="end center" style="display: none;">
-					<img id="profile-pic-r" alt="avatar" class="md-avatar" src="/images/profile-pic.jpg">
-					<div class="md-list-item-text">
-						<h3 id="user-name-r"></h3>
-						<h4>{{flags}} flag<span ng-if="flags!=1">s</span></h4>
-					</div>
-					<md-menu class="md-secondary" md-offset="0 55">
-						<md-button class="md-icon-button">
-							<md-icon class="material-icons">arrow_drop_down</md-icon>
-						</md-button>
-						<md-menu-content width="3">
-							<md-menu-item>
-								<md-button disabled><md-icon>person</md-icon>Profile</md-button>
-							</md-menu-item>
-							<md-menu-item>
-								<md-button ng-href="/settings" ng-click="reset()"><md-icon>settings</md-icon>Settings</md-button>
-							</md-menu-item>
-							<md-menu-divider></md-menu-divider>
-							<md-menu-item>
-								<md-button onclick="signOut()"><md-icon>exit_to_app</md-icon>Sign Out</md-button>
-							</md-menu-item>
-						</md-menu-content>
-					</md-menu>
-				</md-list-item>
-				<div id="sign-in" class="g-signin2 md-button" data-width="100" data-onsuccess="onSignIn"></div>
-			</div>
-			<md-nav-bar aria-label="nav-bar" md-selected-nav-item="navItem" style="overflow-x: scroll;" class="md-whiteframe-2dp">
-				<md-nav-item md-nav-href="/" name="home">Home</md-nav-item>
-				<md-nav-item md-nav-href="/about" name="about">About</md-nav-item>
-				<md-nav-item md-nav-href="/courses" name="courses">Courses</md-nav-item>
-				<md-nav-item md-nav-href="/studyguides" name="studyguides">Study Guides</md-nav-item>
-				<md-nav-item md-nav-href="/feedback" name="feedback">Feedback</md-nav-item>
-			</md-nav-bar>
-		</md-toolbar>
-		<section flex ng-view layout="row" ng-cloak></section>
-	</div>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://apis.google.com/js/platform.js" async defer></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-sanitize.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.9/angular-material.min.js"></script>
-	<script src="/__/firebase/5.0.4/firebase.js"></script>
-	<script src="/__/firebase/5.0.4/firebase-app.js"></script>
-	<script src="/__/firebase/5.0.4/firebase-auth.js"></script>
-	<script src="/__/firebase/5.0.4/firebase-database.js"></script>
-	<!--<script src="/__/firebase/5.0.4/firebase-messaging.js"></script>-->
-	<!--<script src="/__/firebase/5.0.4/firebase-storage.js"></script>-->
-	<script src="/__/firebase/5.0.4/firebase-firestore.js"></script>
-	<script src="/__/firebase/5.0.4/firebase-functions.js"></script>
-	<script src="/__/firebase/init.js"></script>
-	<script src="/scripts/firebase.js"></script>
-	<script>
-		var config={
-			apiKey: "AIzaSyDvbUDSwqXI2mcfPRDKl1Z3OA5EpCCf0YE",
-			authDomain: "bowenyin-tk.firebaseapp.com",
-			databaseURL: "https://bowenyin-tk.firebaseio.com",
-			projectId: "bowenyin-tk",
-			storageBucket: "bowenyin-tk.appspot.com",
-			messagingSenderId: "978510109102"
-		};
-		firebase.initializeApp(config);
-	</script>
-	<script src="/scripts/home.js"></script>
-	<script src="/scripts/main.js"></script>
-	<script src="/scripts/courses.js"></script>
-	<script src="/scripts/studyguides.js"></script>
-	<style>
-		#copyright:hover {
-			background-color: transparent;
-			cursor: default;
-		}
-	</style>
+  <md-sidenav md-component-id="left" class="md-sidenav-left" md-whiteframe="6">
+    <md-list-item hide-gt-xs class="md-2-line" id="user-info-l" flex="none" layout-align="end center" style="display: none;">
+      <img id="profile-pic-l" alt="avatar" class="md-avatar" src="/images/profile-pic.jpg">
+      <div class="md-list-item-text">
+        <h3 id="user-name-l"></h3>
+        <h4>{{flags}} flag<span ng-if="flags!=1">s</span></h4>
+      </div>
+      <md-menu class="md-secondary" md-offset="0 55">
+        <md-button class="md-icon-button"><md-icon class="material-icons">arrow_drop_down</md-icon></md-button>
+        <md-menu-content width="3">
+          <md-menu-item>
+            <md-button disabled><md-icon>person</md-icon>Profile</md-button>
+          </md-menu-item>
+          <md-menu-item>
+            <md-button ng-href="/settings" ng-click="reset()"><md-icon>settings</md-icon>Settings</md-button>
+          </md-menu-item>
+          <md-menu-divider></md-menu-divider>
+          <md-menu-item>
+            <md-button onclick="signOut()"><md-icon>exit_to_app</md-icon>Sign Out</md-button>
+          </md-menu-item>
+        </md-menu-content>
+      </md-menu>
+    </md-list-item>
+    <md-content>
+      <md-list>
+        <md-list-item ng-href="/settings" ng-click="toggleLeftMenu(); reset();">
+          <div class="md-list-item-content">
+            <md-icon layout-padding>settings</md-icon>
+            <span>Settings</span>
+          </div>
+        </md-list-item>
+        <md-list-item ng-href="/ads" ng-click="toggleLeftMenu(); reset();">
+          <div class="md-list-item-content">
+            <md-icon layout-padding>forum</md-icon>
+            <span>Advertisements</span>
+          </div>
+        </md-list-item>
+      </md-list>
+      <div layout-margin>
+        <code>v2.0.0</code>
+        <div align="center" id="copyright" class="md-button"><md-icon>code</md-icon> © 2018 Bowen Yin</div>
+      </div>
+      <h6 layout-margin><a href="/privacy" ng-click="toggleLeftMenu(); reset();">Privacy Policy</a>• AP® is a registered trademark of the College Board, which is not affiliated with, and does not endorse, this site.</h6>
+    </md-content>
+  </md-sidenav>
+  <div flex layout="column">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="menu" ng-click="toggleLeftMenu()">
+          <md-icon>menu</md-icon>
+        </md-button>
+        <md-truncate flex>{{pageTitle}}</md-truncate>
+        <md-list-item hide-xs class="md-2-line" id="user-info-r" flex="none" layout-align="end center" style="display: none;">
+          <img id="profile-pic-r" alt="avatar" class="md-avatar" src="/images/profile-pic.jpg">
+          <div class="md-list-item-text">
+            <h3 id="user-name-r"></h3>
+            <h4>{{flags}} flag<span ng-if="flags!=1">s</span></h4>
+          </div>
+          <md-menu class="md-secondary" md-offset="0 55">
+            <md-button class="md-icon-button">
+              <md-icon class="material-icons">arrow_drop_down</md-icon>
+            </md-button>
+            <md-menu-content width="3">
+              <md-menu-item>
+                <md-button disabled><md-icon>person</md-icon>Profile</md-button>
+              </md-menu-item>
+              <md-menu-item>
+                <md-button ng-href="/settings" ng-click="reset()"><md-icon>settings</md-icon>Settings</md-button>
+              </md-menu-item>
+              <md-menu-divider></md-menu-divider>
+              <md-menu-item>
+                <md-button onclick="signOut()"><md-icon>exit_to_app</md-icon>Sign Out</md-button>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
+        </md-list-item>
+        <div id="sign-in" class="g-signin2 md-button" data-width="100" data-onsuccess="onSignIn"></div>
+      </div>
+      <md-nav-bar aria-label="nav-bar" md-selected-nav-item="navItem" style="overflow-x: auto;" class="md-whiteframe-2dp">
+        <md-nav-item md-nav-href="/" name="home">Home</md-nav-item>
+        <md-nav-item md-nav-href="/about" name="about">About</md-nav-item>
+        <md-nav-item md-nav-href="/courses" name="courses">Courses</md-nav-item>
+        <md-nav-item md-nav-href="/studyguides" name="studyguides">Study Guides</md-nav-item>
+        <md-nav-item md-nav-href="/feedback" name="feedback">Feedback</md-nav-item>
+      </md-nav-bar>
+    </md-toolbar>
+    <section flex ng-view layout="row" ng-cloak></section>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-sanitize.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.10/angular-material.min.js"></script>
+  <script src="/__/firebase/5.2.0/firebase.js"></script>
+  <script src="/__/firebase/5.2.0/firebase-app.js"></script>
+  <script src="/__/firebase/5.2.0/firebase-auth.js"></script>
+  <script src="/__/firebase/5.2.0/firebase-database.js"></script>
+  <!--<script src="/__/firebase/5.2.0/firebase-messaging.js"></script>-->
+  <!--<script src="/__/firebase/5.2.0/firebase-storage.js"></script>-->
+  <script src="/__/firebase/5.2.0/firebase-firestore.js"></script>
+  <script src="/__/firebase/5.2.0/firebase-functions.js"></script>
+  <script src="/__/firebase/init.js"></script>
+  <script src="/scripts/firebase.js"></script>
+  <script>
+    /*var config={
+      apiKey: "AIzaSyDvbUDSwqXI2mcfPRDKl1Z3OA5EpCCf0YE",
+      authDomain: "bowenyin-tk.firebaseapp.com",
+      databaseURL: "https://bowenyin-tk.firebaseio.com",
+      projectId: "bowenyin-tk",
+      storageBucket: "bowenyin-tk.appspot.com",
+      messagingSenderId: "978510109102"
+    };
+    firebase.initializeApp(config);*/
+  </script>
+  <script src="/scripts/home.js"></script>
+  <script src="/scripts/main.js"></script>
+  <script src="/scripts/courses.js"></script>
+  <script src="/scripts/studyguides.js"></script>
+  <style>
+    #copyright:hover {
+      background-color: transparent;
+      cursor: default;
+    }
+  </style>
 </body>
 </html>
