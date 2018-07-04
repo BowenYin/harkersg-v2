@@ -1,88 +1,104 @@
-<style>
-	fieldset {
-		border-style: solid;
-		padding: 14px 16px 0 16px;
-	}
-
-	legend {
-		text-transform: uppercase;
-		font-weight: bold;
-	}
-</style>
-<md-content layout-fill layout="column">
-	<div flex="none" layout-padding layout="column" layout-gt-xs="row">
-		<div flex layout="column">
-			<fieldset>
-				<legend>Math</legend>
-				<div ng-repeat="subject in courses['ms-math']">
-					<md-checkbox>{{subject}}</md-checkbox>
+<link rel="stylesheet" href="styles/courses.css">
+<div flex layout="column">
+	<md-content flex layout="column" layout-gt-sm="row">
+		<md-progress-circular id="loader" md-mode="indeterminate" ng-if="loading"></md-progress-circular>
+		<section id="ms" layout-margin ng-if="!loading" flex-gt-md="33">
+			<h3>Middle School Courses</h3>
+			<div layout="column" layout-xl="row">
+				<div flex="none" flex-xl layout="column">
+					<fieldset>
+						<legend>Math</legend>
+						<md-checkbox ng-repeat="course in list.ms.math | filter: search" ng-model="selected[course]" ng-change="update(course)">{{course}}</md-checkbox>
+					</fieldset>
+					<fieldset>
+						<legend>English</legend>
+						<md-checkbox ng-repeat="course in list.ms.english | filter: search" ng-model="selected[course]" ng-change="update(course)">{{course}}</md-checkbox>
+					</fieldset>
+					<fieldset>
+						<legend>Science</legend>
+						<md-checkbox ng-repeat="course in list.ms.science | filter: search" ng-model="selected[course]" ng-change="update(course)">{{course}}</md-checkbox>
+					</fieldset>
 				</div>
-			</fieldset>
-			<fieldset>
-				<legend>English</legend>
-				<div ng-repeat="subject in courses['ms-eng']">
-					<md-checkbox>{{subject}}</md-checkbox>
+				<div flex="none" flex-xl layout="column">
+					<fieldset>
+						<legend>History</legend>
+						<md-checkbox ng-repeat="course in list.ms.history | filter: search" ng-model="selected[course]" ng-change="update(course)">{{course}}</md-checkbox>
+					</fieldset>
+					<fieldset>
+						<legend>Languages</legend>
+						<md-checkbox ng-repeat="course in list.ms.language | filter: search" ng-model="selected[course]" ng-change="update(course)">{{course}}</md-checkbox>
+					</fieldset>
 				</div>
-			</fieldset>
-			<fieldset>
-				<legend>History</legend>
-				<div ng-repeat="subject in courses['ms-hist']">
-					<md-checkbox>{{subject}}</md-checkbox>
+			</div>
+		</section>
+		<section id="hs" layout-margin ng-if="!loading" flex-gt-md="66">
+			<h3>Upper School Courses</h3>
+			<div layout="column" layout-gt-md="row">
+				<div flex="none" flex-gt-md layout="column">
+					<fieldset>
+						<legend>Math</legend>
+						<md-checkbox ng-repeat="course in list.us.math | filter: search" ng-model="selected[course]" ng-change="update(course)">{{course}}</md-checkbox>
+					</fieldset>
+					<fieldset>
+						<legend>English</legend>
+						<md-checkbox ng-repeat="course in list.us.english | filter: search" ng-model="selected[course]" ng-change="update(course)">{{course}}</md-checkbox>
+					</fieldset>
+					<fieldset>
+						<legend>Science</legend>
+						<md-checkbox ng-repeat="course in list.us.science | filter: search" ng-model="selected[course]" ng-change="update(course)">{{course}}</md-checkbox>
+					</fieldset>
+					<fieldset>
+						<legend>History</legend>
+						<md-checkbox ng-repeat="course in list.us.history | filter: search" ng-model="selected[course]" ng-change="update(course)">{{course}}</md-checkbox>
+					</fieldset>
 				</div>
-			</fieldset>
+				<div flex="none" flex-gt-md layout="column">
+					<fieldset>
+						<legend>Computer Science</legend>
+						<md-checkbox ng-repeat="course in list.us.cs | filter: search" ng-model="selected[course]" ng-change="update(course)">{{course}}</md-checkbox>
+					</fieldset>
+					<fieldset>
+						<legend>Spanish</legend>
+						<md-checkbox ng-repeat="course in list.us.spanish | filter: search" ng-model="selected[course]" ng-change="update(course)">{{course}}</md-checkbox>
+					</fieldset>
+					<fieldset>
+						<legend>French</legend>
+						<md-checkbox ng-repeat="course in list.us.french | filter: search" ng-model="selected[course]" ng-change="update(course)">{{course}}</md-checkbox>
+					</fieldset>
+					<fieldset>
+						<legend>Japanese</legend>
+						<md-checkbox ng-repeat="course in list.us.japanese | filter: search" ng-model="selected[course]" ng-change="update(course)">{{course}}</md-checkbox>
+					</fieldset>
+					<fieldset>
+						<legend>Latin</legend>
+						<md-checkbox ng-repeat="course in list.us.latin | filter: search" ng-model="selected[course]" ng-change="update(course)">{{course}}</md-checkbox>
+					</fieldset>
+					<fieldset>
+						<legend>Mandarin</legend>
+						<md-checkbox ng-repeat="course in list.us.mandarin | filter: search" ng-model="selected[course]" ng-change="update(course)">{{course}}</md-checkbox>
+					</fieldset>
+					<fieldset>
+						<legend>Visual/Performing Arts</legend>
+						<md-checkbox ng-repeat="course in list.us.art | filter: search" ng-model="selected[course]" ng-change="update(course)">{{course}}</md-checkbox>
+					</fieldset>
+					<fieldset>
+						<legend>Business & Entrepreneurship</legend>
+						<md-checkbox ng-repeat="course in list.us.business | filter: search" ng-model="selected[course]" ng-change="update(course)">{{course}}</md-checkbox>
+					</fieldset>
+				</div>
+			</div>
+		</section>
+	</md-content>
+	<footer class="md-whiteframe-3dp" style="z-index: 2;">
+		<div layout="row">
+			<md-autocomplete hide show-gt-sm md-items="[]" md-search-text="search" placeholder="Search courses" md-select-on-focus></md-autocomplete>
+			<span class="info" hide show-gt-md>Some courses are not shown.</span>
+			<div flex></div>
+			<span class="error" ng-if="max">Max 7 courses</span>
+			<md-button class="error" ng-disabled="true" ng-if="unsaved && (!max || gtXs)">Unsaved Changes</md-button>
+			<md-button ng-disabled="loading || !signedIn" ng-click="selected={}; update();">Deselect All</md-button>
+			<md-button class="md-raised" ng-disabled="loading || !unsaved" ng-click="reset()">Reset</md-button>
+			<md-button class="md-primary md-raised" ng-disabled="loading || !unsaved || max" ng-click="save()">Save</md-button>
 		</div>
-		<div flex layout="column">
-			<fieldset>
-				<legend>Science</legend>
-				<div ng-repeat="subject in courses['ms-sci']">
-					<md-checkbox>{{subject}}</md-checkbox>
-				</div>
-			</fieldset>
-			<fieldset>
-				<legend>Languages</legend>
-				<div ng-repeat="subject in courses['ms-lang']">
-					<md-checkbox>{{subject}}</md-checkbox>
-				</div>
-			</fieldset>
-		</div>
-	</div>
-	<div flex="none" layout-padding layout="column" layout-gt-xs="row">
-		<div flex layout="column">
-			<fieldset>
-				<legend>Math</legend>
-				<div ng-repeat="subject in courses.math">
-					<md-checkbox>{{subject}}</md-checkbox>
-				</div>
-			</fieldset>
-			<fieldset>
-				<legend>English</legend>
-				<div ng-repeat="subject in courses.eng">
-					<md-checkbox>{{subject}}</md-checkbox>
-				</div>
-			</fieldset>
-			<fieldset>
-				<legend>Science</legend>
-				<div ng-repeat="subject in courses.sci">
-					<md-checkbox>{{subject}}</md-checkbox>
-				</div>
-			</fieldset>
-			<fieldset>
-				<legend>History</legend>
-				<div ng-repeat="subject in courses.hist">
-					<md-checkbox>{{subject}}</md-checkbox>
-				</div>
-			</fieldset>
-		</div>
-		<div flex layout="column">
-			<fieldset>
-				<legend>8th Grade</legend>
-			</fieldset>
-			<fieldset>
-				<legend>??</legend>
-			</fieldset>
-			<fieldset>
-				<legend>Other</legend>
-			</fieldset>
-		</div>
-	</div>
-</md-content>
+	</footer>
+</div>
