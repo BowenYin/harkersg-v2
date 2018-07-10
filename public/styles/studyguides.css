@@ -1,39 +1,65 @@
 .flip {
-	transform: scaleY(-1);
+  transform: scaleY(-1);
 }
 md-card-header, md-card-title, md-card-content {
-	cursor: pointer;
+  cursor: pointer;
 }
 md-card-header:focus, md-card-title:focus, md-card-content:focus {
-	outline: none;
+  outline: none;
+}
+md-grid-tile.folder {
+  border: 1px solid #aaa;
+  border-radius: 2px;
 }
 md-grid-tile.sg md-card-actions {
-	display: none !important;
+  display: none !important;
 }
 md-grid-tile.sg:hover md-card-actions {
-	display: flex !important;
+  display: flex !important;
 }
 md-card .md-icon-button:not([disabled]) md-icon {
-	transition-duration: 100ms;
+  transition-duration: 100ms;
 }
 md-card .md-icon-button:not([disabled]):hover md-icon {
-	opacity: 0.8;
+  opacity: 0.75;
 }
 md-card md-card-header:first-child md-card-avatar {
-	height: 32px;
-	width: 32px;
-	margin-right: 8px;
+  height: 32px;
+  width: 32px;
+  margin-right: 8px;
 }
 md-card md-card-header-text span {
-	font-size: 12px !important;
-	line-height: 16px !important;
-	overflow-x: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+  font-size: 12px !important;
+  line-height: 16px !important;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 md-card md-card-title md-card-title-text .md-subhead {
-	font-size: 13px;
+  font-size: 12px;
+  line-height: 15px;
 }
-md-card md-card-title md-card-title-text .md-title {
-	font-size: 16px;
+.sg md-card md-card-title md-card-title-text .md-title {
+  font-size: 16px;
+  line-height: 20px;
+}
+.sg md-card md-card-title md-card-title-text .md-subhead {
+  color: gray;
+}
+.sg md-card md-card-header {
+  padding: 8px 12px 6px;
+  min-height: 32px;
+}
+.sg md-card md-card-title {
+  padding: 0 12px;
+  min-height: 0;
+}
+.sg md-card md-card-actions {
+  margin: 0;
+}
+.folder .md-title {
+  font-size: 16px;
+}
+md-card md-card-title md-card-title-text:only-child .md-subhead {
+  padding-top: 4px;
 }

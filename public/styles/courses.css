@@ -1,0 +1,27 @@
+fieldset {
+  border-style: solid;
+  padding: 10px 2px 0 14px;
+  margin-bottom: 12px;
+  border-radius: 3px;
+}
+legend {
+  font-size: 15px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+md-autocomplete {
+  margin: auto 10px;
+  width: 360px;
+}
+.error {
+  color: orangered !important;
+  margin: auto 8px;
+}
+.info {
+  font-size: 12px;
+  color: darkgray;
+  margin: auto 8px;
+}
+#loader {
+  margin-top: 20px;
+}
