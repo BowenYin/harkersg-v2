@@ -1,0 +1,30 @@
+<md-dialog layout-padding layout-margin>
+	<h3>Edit Study Guide</h3>
+	<md-dialog-content>
+		<form name="editSG">
+			<md-input-container class="md-block">
+				<label>Title</label>
+				<md-icon>text_fields</md-icon>
+				<input type="text" name="title" ng-model="sg.title" md-maxlength="50" minlength="5" required md-no-asterisk>
+				<div ng-messages="editSG.title.$error" ng-if="editSG.title.$touched">
+					<div ng-message="md-maxlength">Title is too long.</div>
+					<div ng-message="required">Required.</div>
+				</div>
+			</md-input-container>
+			<md-input-container class="md-block">
+				<label>Description (optional)</label>
+				<md-icon>subject</md-icon>
+				<textarea name="info" ng-model="sg.info" md-maxlength="100" md-no-resize max-rows="3"></textarea>
+				<div ng-messages="editSG.info.$error" ng-if="editSG.info.$touched">
+					<div ng-message="md-maxlength">Description is too long.</div>
+				</div>
+			</md-input-container>
+		</form>
+	</md-dialog-content>
+	<md-dialog-actions>
+		<span class="md-caption" style="color: gray;">Updates will be visible by all users immediately.</span>
+		<span flex></span>
+		<md-button ng-click="cancel()">Cancel</md-button>
+		<md-button class="md-primary md-raised" ng-click="save()" ng-disabled="editSG.$pristine">Save</md-button>
+	</md-dialog-actions>
+</md-dialog>

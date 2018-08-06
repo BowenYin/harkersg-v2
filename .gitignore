@@ -5,3 +5,4 @@ firebase-debug.log
 .vscode
 public/angular-material-orig.css
 .DS_Store
+public/.DS_Store
