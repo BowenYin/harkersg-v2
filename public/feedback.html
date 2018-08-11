@@ -1,26 +1,30 @@
-<section flex layout="column">
-  <span layout-padding layout-margin class="md-headline">Feedback</span><br>
-  <md-content flex layout-padding>
-    <form layout-margin name="feedback" flex flex-md="70" flex-lg="50" flex-xl="30">
-      <md-tooltip ng-if="fbNo" md-delay="200" md-direction="top">Max one submission per hour.</md-tooltip>
+<md-content flex>
+  <div layout-margin layout-padding>
+    <h1>Feedback</h1>
+    <p><img id="github-logo" src="/images/github-logo.svg" height="20"><strong>Important:</strong> If you have a GitHub account, please create a new issue in the <a href="https://github.com/bowenyin/harkersg" target="_blank">HarkerSG repository</a> instead.</p>
+    <form layout-margin name="feedback" flex flex-sm="70" flex-md="50" flex-lg="40" flex-xl="25">
+      <!--<md-tooltip ng-if="fbNo" md-delay="200" md-direction="top">Max one submission per hour.</md-tooltip>-->
       <md-tooltip ng-if="!signedIn" md-delay="200" md-direction="top">Please sign in to send feedback.</md-tooltip>
       <p class="md-body-2">Type of Feedback</p>
-      <md-radio-group ng-model="fb.type" ng-disabled="fbNo||!signedIn">
-        <md-radio-button value="comment">Comment</md-radio-button>
-        <md-radio-button value="suggestion">Feature Suggestion</md-radio-button>
+      <md-radio-group ng-model="fb.type" ng-disabled="!signedIn || fbLoading">
+        <md-radio-button value="comment">Comment or Question</md-radio-button>
+        <md-radio-button value="feature">Feature Suggestion</md-radio-button>
         <md-radio-button value="bug">Bug Report</md-radio-button>
+        <md-radio-button value="mistake">Content Error or Missing Course</md-radio-button>
         </md-radio-group>
       <md-input-container class="md-block">
         <label>Suggestions/Comments/Questions/Issues</label>
-        <textarea name="text" required md-no-asterisk ng-model="fb.text" ng-disabled="fbNo||!signedIn" md-maxlength="500" minlength="10" rows="2" max-rows="10" md-no-resize></textarea>
+        <textarea name="text" required md-no-asterisk ng-model="fb.text" ng-disabled="!signedIn || fbLoading" md-maxlength="500" minlength="10" rows="2" max-rows="10"></textarea>
         <div ng-messages="feedback.text.$error" ng-show="feedback.text.$dirty">
-          <div ng-message="required">Required.</div>
-          <div ng-message="md-maxlength">Too many characters.</div>
-          <div ng-message="minlength">That's not useful feedback.</div>
+          <div ng-message="required">Required</div>
+          <div ng-message="md-maxlength">Feedback is too long.</div>
+          <div ng-message="minlength">That's not useful feedback ;)</div>
         </div>
       </md-input-container>
-      <md-button type="submit" ng-click="submit()" ng-disabled="fbNo||!signedIn" class="md-primary md-raised">Submit</md-button>
-      <md-content class="md-caption">Note: You can only submit once per hour.</md-content>
+      <div><span class="md-body-2">How likely are you to recommend HarkerSG to another student?</span> <span class="md-body-1">(1: Not at all likely, 10: Extremely likely)</span></div>
+      <md-slider layout-margin ng-model="fb.rating" ng-disabled="!signedIn || fbLoading" md-discrete min="1" max="10"></md-slider>
+      <md-button class="md-primary md-raised" type="submit" ng-click="submit()" ng-disabled="!signedIn || fbLoading">Submit</md-button>
+      <md-content class="md-caption" style="color: gray;">This form is <em>not</em> anonymous.</md-content>
     </form>
-  </md-content>
-</section>
+  </div>
+</md-content>

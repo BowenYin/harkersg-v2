@@ -28,7 +28,9 @@ app.controller("CoursesControl", function($scope, $rootScope, $mdMedia, $mdToast
 		for (let name in $scope.selected)
 			if ($scope.selected[name]===true) arr.push(name);
 		var updateCourses=functions.httpsCallable("updateCourses");
-		$mdToast.show($mdToast.simple().textContent("Saving courses. This may take up to 30 seconds."));
+		$mdToast.show(
+			$mdToast.simple().textContent("Saving courses... (This may take up to 30 seconds.)").hideDelay(0)
+		);
 		updateCourses({courses: arr}).then(function(result) {
 			$scope.loading=false;
 			$mdToast.hide();
