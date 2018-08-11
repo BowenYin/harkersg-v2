@@ -1,0 +1,22 @@
+<md-dialog layout-padding layout-margin>
+	<h3>Edit Folder</h3>
+	<md-dialog-content>
+		<form name="editFolder">
+			<md-input-container class="md-block">
+				<label>Title</label>
+				<md-icon>text_fields</md-icon>
+				<input type="text" name="title" ng-model="folder.title" md-maxlength="40" minlength="4" required md-no-asterisk>
+				<div ng-messages="editFolder.title.$error" ng-if="editFolder.title.$touched">
+					<div ng-message="md-maxlength">Folder name is too long.</div>
+					<div ng-message="required">Required.</div>
+				</div>
+			</md-input-container>
+		</form>
+	</md-dialog-content>
+	<md-dialog-actions>
+		<span class="md-caption" style="color: gray;">Updates will be visible by all users immediately.</span>
+		<span flex></span>
+		<md-button ng-click="cancel()">Cancel</md-button>
+		<md-button class="md-primary md-raised" ng-click="save()" ng-disabled="editFolder.$pristine">Save</md-button>
+	</md-dialog-actions>
+</md-dialog>
