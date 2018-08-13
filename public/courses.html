@@ -1,8 +1,8 @@
 <link rel="stylesheet" href="styles/courses.css">
 <div flex layout="column">
 	<md-content flex layout="column" layout-gt-sm="row">
-		<md-progress-circular id="loader" md-mode="indeterminate" ng-if="loading"></md-progress-circular>
-		<section id="ms" layout-margin ng-if="!loading" flex-gt-md="33">
+		<md-progress-circular id="loader" ng-if="loading" md-mode="indeterminate"></md-progress-circular>
+		<section id="ms" layout-margin flex-gt-md="33" ng-if="!loading">
 			<h3>Middle School Courses</h3>
 			<div layout="column" layout-xl="row">
 				<div flex="none" flex-xl layout="column">
@@ -31,7 +31,7 @@
 				</div>
 			</div>
 		</section>
-		<section id="hs" layout-margin ng-if="!loading" flex-gt-md="66">
+		<section id="hs" layout-margin flex-gt-md="66" ng-if="!loading">
 			<h3>Upper School Courses</h3>
 			<div layout="column" layout-gt-md="row">
 				<div flex="none" flex-gt-md layout="column">
@@ -91,14 +91,14 @@
 	</md-content>
 	<footer class="md-whiteframe-3dp" style="z-index: 2;">
 		<div layout="row">
-			<md-autocomplete hide show-gt-sm md-items="[]" md-search-text="search" placeholder="Search courses" md-select-on-focus></md-autocomplete>
-			<span class="info" hide show-gt-md>Some courses are not shown.</span>
+			<md-autocomplete hide show-gt-sm ng-disabled="loading" placeholder="Search courses" md-items="[]" md-search-text="search" md-select-on-focus></md-autocomplete>
+			<span class="info" hide show-gt-md>Report missing courses using <a href="/feedback" ng-click="goToFeedback()">Feedback</a> form.</span>
 			<div flex></div>
 			<span class="error" ng-if="max">Max 7 courses</span>
-			<md-button class="error" ng-disabled="true" ng-if="unsaved && (!max || gtXs)">Unsaved Changes</md-button>
+			<md-button class="error" ng-if="unsaved && (!max || gtXs)" ng-disabled="true">Unsaved Changes</md-button>
 			<md-button ng-disabled="loading || !signedIn" ng-click="selected={}; update();">Deselect All</md-button>
 			<md-button class="md-raised" ng-disabled="loading || !unsaved" ng-click="reset()">Reset</md-button>
-			<md-button class="md-primary md-raised" ng-disabled="loading || !unsaved || max" ng-click="save()">Save</md-button>
+			<md-button class="md-primary md-raised" ng-disabled="loading || !unsaved || max || !isSchool" ng-click="save()">Save</md-button>
 		</div>
 	</footer>
 </div>
