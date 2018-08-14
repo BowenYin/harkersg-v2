@@ -15,16 +15,8 @@ h1 {
   font-size: 32px;
   font-weight: 100; }
 h3 {
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 100; }
-/*.md-display-1 {
-  font-size: 20px; }
-.md-display-2 {
-  font-size: 24px; }
-.md-display-3 {
-  font-size: 30px; }
-.md-display-4 {
-  font-size: 36px; }*/
 .md-body-1, .md-body-2 {
   font-size: 13px;
   line-height: 18px;
@@ -102,7 +94,59 @@ md-menu-item>a.md-button {
   padding-top: 0;
 }
 /* CUSTOM STYLES */
+a {
+  color: inherit;
+}
 #profile-pic-r, #profile-pic-l {
   margin-top: 8px;
   align-self: center;
+}
+#message {
+  font-size: 12px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+#copyright:hover {
+  background-color: transparent;
+  cursor: default;
+}
+#google-logo {
+  vertical-align: text-top;
+  margin-right: 3px;
+}
+#github-logo {
+  vertical-align: text-top;
+  margin-right: 6px;
+}
+#title {
+  font-weight: 100;
+  font-size: 24px;
+}
+/* HOMEPAGE STYLES */
+.sticky {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+}
+.main {
+  padding: 48px 42px;
+}
+.main>div {
+  position: relative;
+}
+.container {
+  width: 100%;
+  position: relative;
+  border: 1px solid gray;
+  border-radius: 2px;
+}
+.component {
+  position: absolute;
+}
+.center {
+  margin: auto;
+  display: block;
+}
+.gap {
+  height: 300px;
 }
