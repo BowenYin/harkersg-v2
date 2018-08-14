@@ -2,14 +2,14 @@ app.controller("SGControl", function($scope, $rootScope, $mdToast, $mdDialog) {
   $rootScope.navItem="studyguides";
   $rootScope.pageTitle="Notes / Study Guides";
   $rootScope.tabName="Notes/Study Guides - HarkerSG";
-  //$scope.navItem="home";
+  //$scope.navItem="home"; ???
   $scope.sgForm={showName: true};
   $scope.folderForm={};
   $scope.sort="-time";
   $scope.hoverFx=function() {
     $("md-grid-tile").hover(
-      function() {$(this).addClass("md-whiteframe-3dp");},
-      function() {$(this).removeClass("md-whiteframe-3dp");}
+      function() {$(this).addClass("md-whiteframe-2dp");},
+      function() {$(this).removeClass("md-whiteframe-2dp");}
     );
   };
   $scope.clearSG=function() {
@@ -20,8 +20,7 @@ app.controller("SGControl", function($scope, $rootScope, $mdToast, $mdDialog) {
   };
   $scope.submitSG=function() {
     if ($scope.addSG.$valid) {
-      $scope.sgLoading=true;
-      if ($scope.sgForm.folder==undefined) $scope.sgForm.folder=null;
+      if ($scope.sgForm.folder=="None" || $scope.sgForm.folder==undefined) $scope.sgForm.folder=null;
       $scope.sgForm.info=$scope.sgForm.info || "";
       var addSG=functions.httpsCallable("addSG");
       addSG({
@@ -32,13 +31,9 @@ app.controller("SGControl", function($scope, $rootScope, $mdToast, $mdDialog) {
         url: $scope.sgForm.url,
         honorCode: $scope.sgForm.honorCode,
         showName: $scope.sgForm.showName,
-      }).then(function(result) {
+      }).then(function() {
         $mdToast.show(
-          $mdToast.simple()
-            .textContent("Successfully added study guide to "+$scope.sgForm.course+".")
-            .hideDelay(4000)
-            .action("OK")
-            .highlightAction(true)
+          $mdToast.simple().textContent("Successfully added study guide to "+$scope.sgForm.course+".").hideDelay(4000).action("OK").highlightAction(true)
         );
         setTimeout(function() {
           document.activeElement.blur();
@@ -47,24 +42,32 @@ app.controller("SGControl", function($scope, $rootScope, $mdToast, $mdDialog) {
       }).catch(function(error) {
         console.error(error);
         $mdToast.show(
-          $mdToast.simple()
-            .textContent("An unexpected error has occurred.")
-            .hideDelay(4000)
-            .action("OK")
-            .highlightAction(true)
+          $mdToast.simple().textContent("An unexpected error has occurred.").hideDelay(4000).action("OK").highlightAction(true)
         );
-      }).finally(function() {
-        $scope.sgLoading=false;
-      });
+      }).finally(function() {$scope.sgLoading=false;});
+      $scope.sgLoading=true;
     } else if (!$scope.sgForm.honorCode) {
       document.getElementById("honor-sg").classList.add("md-focused");
       $mdToast.show(
-        $mdToast.simple()
-          .textContent("Please accept the honor code.")
-          .hideDelay(3000)
+        $mdToast.simple().textContent("Please accept the honor code.").hideDelay(3000)
       );
     }
   };
+	$scope.editSG=function(event, course, studyguide) {
+    if ($scope.locked) {
+      $mdToast.show(
+				$mdToast.simple().textContent("You cannot edit since your account is locked.").hideDelay(4000).action("OK").highlightAction(true)
+			);
+    } else {
+  		$mdDialog.show({
+        templateUrl: "edit-sg.html",
+        parent: angular.element(document.body),
+        targetEvent: event,
+  			controller: EditSGControl,
+        locals: {sg: studyguide, course: course},
+      });
+    }
+	};
   $scope.clearFolder=function() {
     $scope.folderForm={};
     $scope.addFolder.$setPristine();
@@ -72,18 +75,13 @@ app.controller("SGControl", function($scope, $rootScope, $mdToast, $mdDialog) {
   };
   $scope.submitFolder=function() {
     if ($scope.addFolder.$valid) {
-      $scope.folderLoading=true;
       var addFolder=functions.httpsCallable("addFolder");
       addFolder({
         course: $scope.folderForm.course,
         title: $scope.folderForm.title,
-      }).then(function(result) {
+      }).then(function() {
         $mdToast.show(
-          $mdToast.simple()
-            .textContent("Successfully added folder to "+$scope.folderForm.course+".")
-            .hideDelay(4000)
-            .action("OK")
-            .highlightAction(true)
+          $mdToast.simple().textContent("Successfully added folder to "+$scope.folderForm.course+".").hideDelay(4000).action("OK").highlightAction(true)
         );
         setTimeout(function() {
           document.activeElement.blur();
@@ -92,150 +90,183 @@ app.controller("SGControl", function($scope, $rootScope, $mdToast, $mdDialog) {
       }).catch(function(error) {
         console.error(error);
         $mdToast.show(
-          $mdToast.simple()
-            .textContent("An unexpected error has occurred.")
-            .hideDelay(4000)
-            .action("OK")
-            .highlightAction(true)
+          $mdToast.simple().textContent("An unexpected error has occurred.").hideDelay(4000).action("OK").highlightAction(true)
         );
-      }).finally(function() {
-        $scope.folderLoading=false;
-      });
+      }).finally(function() {$scope.folderLoading=false;});
+      $scope.folderLoading=true;
     }
   };
+  $scope.editFolder=function(event, course, folder) {
+    if ($scope.locked) {
+      $mdToast.show(
+				$mdToast.simple().textContent("You cannot edit since your account is locked.").hideDelay(4000).action("OK").highlightAction(true)
+			);
+    } else {
+  		$mdDialog.show({
+        templateUrl: "edit-folder.html",
+        parent: angular.element(document.body),
+        targetEvent: event,
+  			controller: EditFolderControl,
+        locals: {folder: folder, course: course},
+      });
+    }
+	};
   $scope.click=function(link) {
     setTimeout(function() {
       window.open(link, "_blank");
     }, 250);
   };
-  $scope.like=function(id,l,uid) {
-    if (!$scope.allowed) {
+  $scope.like=function(id, course) {
+    var likeSG=functions.httpsCallable("likeSG");
+    likeSG({
+      id: id,
+      course: course,
+    }).then(function() {
       $mdToast.show(
-				$mdToast.simple()
-					.textContent("Please sign in with a school account to like study guides.")
-					.hideDelay(4000)
-					.action("OK")
-					.highlightAction(true)
-			);
-    } else {
-      l.push(uid);
-      fs.collection("studyguides").doc(id).update({likes: l})
-      .catch(function(error) {
-        console.error(error);
-        $mdToast.show(
-          $mdToast.simple()
-            .textContent("An error has occurred.")
-            .hideDelay(4000)
-            .action("OK")
-            .highlightAction(true)
-        );
-      });
-    }
+        $mdToast.simple().textContent("Saved.").hideDelay(1000)
+      );
+    }).catch(function(error) {
+      console.error(error);
+      $mdToast.show(
+        $mdToast.simple().textContent("An unexpected error has occurred.").hideDelay(4000).action("OK").highlightAction(true)
+      );
+    });
+    $mdToast.show(
+      $mdToast.simple().textContent("Saving...").hideDelay(0)
+    );
   };
-  $scope.flag=function(id,l,uid) {
-    if ($scope.flags>2) {
+  $scope.flag=function(id, course) {
+    if ($scope.locked) {
       $mdToast.show(
-				$mdToast.simple()
-					.textContent("You cannot flag study guides since your account is disabled.")
-					.hideDelay(4000)
-					.action("OK")
-					.highlightAction(true)
-			);
-    } else if (!$scope.allowed) {
-      $mdToast.show(
-				$mdToast.simple()
-					.textContent("Please sign in with a school account to flag study guides.")
-					.hideDelay(4000)
-					.action("OK")
-					.highlightAction(true)
+        $mdToast.simple().textContent("You cannot flag study guides since your account is locked.").hideDelay(4000).action("OK").highlightAction(true)
 			);
     } else {
-      l.push(uid);
-    	fs.collection("studyguides").doc(id).update({flags: l})
-      .catch(function(error) {
+      var flagSG=functions.httpsCallable("flagSG");
+      flagSG({
+        id: id,
+        course: course,
+      }).then(function() {
+        $mdToast.show(
+          $mdToast.simple().textContent("Saved.").hideDelay(1000)
+        );
+      }).catch(function(error) {
         console.error(error);
         $mdToast.show(
-          $mdToast.simple()
-            .textContent("An error has occurred.")
-            .hideDelay(4000)
-            .action("OK")
-            .highlightAction(true)
+          $mdToast.simple().textContent("An unexpected error has occurred.").hideDelay(4000).action("OK").highlightAction(true)
         );
       });
+      $mdToast.show(
+        $mdToast.simple().textContent("Saving...").hideDelay(0)
+      );
     }
   };
   $scope.getImage=function(url) {
-    if (url.indexOf("quizlet.com")!=-1)
-      return "/images/quizlet.png";
-    if (url.indexOf("docs.google.com")!=-1)
-      return "/images/docs.png";
-    else
-      return "/images/link.png";
+    if (url.indexOf("quizlet.com")!=-1) return "/images/quizlet.png";
+    if (url.indexOf("docs.google.com")!=-1) return "/images/docs.png";
+    else return "/images/link.png";
   };
-	function TeachersControl($scope, $mdDialog, sg) {
-		$scope.tsg=sg;
-    $scope.teachers=sg.teachers.slice();
+	function EditSGControl($scope, $mdDialog, sg, course) {
+    $scope.sg={};
+    Object.assign($scope.sg, sg);
 		$scope.cancel=function() {
 			$mdDialog.cancel();
 		};
 		$scope.save=function() {
-      fs.collection("studyguides").doc(sg.id).update({teachers: $scope.teachers})
-      .catch(function(error) {
-        console.error(error);
+      if ($scope.editSG.$valid) {
+        var editSG=functions.httpsCallable("editSG");
+        editSG({
+          id: $scope.sg.id,
+          course: course,
+          title: $scope.sg.title,
+          info: $scope.sg.info,
+        }).then(function() {
+          $mdToast.show(
+            $mdToast.simple().textContent("Successfully updated study guide.").hideDelay(4000).action("OK").highlightAction(true)
+          );
+        }).catch(function(error) {
+          console.error(error);
+          $mdToast.show(
+            $mdToast.simple().textContent("An unexpected error has occurred.").hideDelay(4000).action("OK").highlightAction(true)
+          );
+        });
+        $mdDialog.hide()
         $mdToast.show(
-          $mdToast.simple()
-            .textContent("An error has occurred.")
-            .hideDelay(4000)
-            .action("OK")
-            .highlightAction(true)
+          $mdToast.simple().textContent("Saving changes...").hideDelay(0)
         );
-      });
-			$mdDialog.hide();
+      }
 		};
-    $scope.resize=function() {
-      var input=document.querySelector('[aria-label="Add Teachers"]');
-      setTimeout(function() {
-        input.setAttribute("size",input.getAttribute("placeholder").length);
-      }, 100);
-    };
-	}
-	$scope.addTeachers=function(event,studyguide) {
-    if ($scope.flags>2) {
-      $mdToast.show(
-				$mdToast.simple()
-					.textContent("You cannot add teachers since your account is disabled.")
-					.hideDelay(4000)
-					.action("OK")
-					.highlightAction(true)
-			);
-    } else if (!$scope.allowed) {
-      $mdToast.show(
-				$mdToast.simple()
-					.textContent("Please sign in with a school account to add teachers.")
-					.hideDelay(4000)
-					.action("OK")
-					.highlightAction(true)
-			);
-    } else {
-  		$mdDialog.show({
-        templateUrl: "teachers.tmpl.html",
-        parent: angular.element(document.body),
-        targetEvent: event,
-  			controller: TeachersControl,
-  			locals: {sg: studyguide},
-  			fullscreen: true
-      });
-    }
-	};
-  $scope.toggleFolder=function(folder, count) {
-    folder.mdCols=3-(folder.mdCols||1);
-    folder.smCols=2-(folder.smCols||1);
-    folder.lgCols=5-(folder.lgCols||1);
-    folder.rows=((folder.rows>1)?1:(Math.ceil(count/3)*3+2));
-    $("#flip-"+folder.id).toggleClass("flip");
   }
-  $scope.filterSG=function() {
-		return function(item) {return $scope.cats.length==0 || $scope.cats.indexOf(item.cat)!=-1;};
-	};
+  function EditFolderControl($scope, $mdDialog, folder, course) {
+    $scope.folder={};
+    Object.assign($scope.folder, folder);
+		$scope.cancel=function() {
+			$mdDialog.cancel();
+		};
+		$scope.save=function() {
+      if ($scope.editFolder.$valid) {
+        var editFolder=functions.httpsCallable("editFolder");
+        editFolder({
+          course: course,
+          folder: folder.time,
+          title: $scope.folder.title,
+        }).then(function() {
+          $mdToast.show(
+            $mdToast.simple().textContent("Successfully updated folder.").hideDelay(4000).action("OK").highlightAction(true)
+          );
+        }).catch(function(error) {
+          console.error(error);
+          $mdToast.show(
+            $mdToast.simple().textContent("An unexpected error has occurred.").hideDelay(4000).action("OK").highlightAction(true)
+          );
+        });
+        $mdDialog.hide()
+        $mdToast.show(
+          $mdToast.simple().textContent("Saving changes...").hideDelay(0)
+        );
+      }
+		};
+	}
+  $scope.toggleFolder=function(course, folder) {
+    folder.cols=3-(folder.cols || 1);
+    folder.xlCols=5-(folder.xlCols || 1);
+    $("#flip-"+folder.time).toggleClass("flip");
+    if (folder.sg===undefined) {
+      folder.sg=[];
+      folder.rows=2;
+      folder.loading=true;
+      fs.collection("courses").doc(course).collection("sg").where("folder", "==", folder.time).onSnapshot(function(snapshot) {
+        snapshot.docChanges().forEach(function(change) {
+          let sg=change.doc.data();
+          if (change.type==="added") {
+            sg.id=change.doc.id;
+            folder.sg.splice(change.newIndex, 0, sg);
+          } else if (change.type==="modified") {
+            sg.id=change.doc.id;
+            folder.sg[change.oldIndex]=sg;
+          } else if (change.type==="removed")
+            folder.sg.splice(change.oldIndex, 1);
+        });
+        if (folder.cols>1) {
+          folder.xsRows=Math.max(2, folder.sg.length*3+1);
+          folder.rows=Math.max(2, Math.ceil(folder.sg.length/2)*3+1);
+          folder.lgRows=Math.max(2, Math.ceil(folder.sg.length/3)*3+1);
+          folder.xlRows=Math.max(2, Math.ceil(folder.sg.length/5)*3+1);
+          folder.loading=false;
+        }
+        $scope.lastUpdated=new Date();
+        $scope.$apply();
+      });
+    } else if (folder.rows>1) {
+      folder.xsRows=1;
+      folder.rows=1;
+      folder.lgRows=1;
+      folder.xlRows=1;
+    } else {
+      folder.xsRows=Math.max(2, folder.sg.length*3+1);
+      folder.rows=Math.max(2, Math.ceil(folder.sg.length/2)*3+1);
+      folder.lgRows=Math.max(2, Math.ceil(folder.sg.length/3)*3+1);
+      folder.xlRows=Math.max(2, Math.ceil(folder.sg.length/5)*3+1);
+    }
+  }
 });
-//applyTemplate=function(msg) {return;};
+//applyTemplate=function(msg) {return;}; ???
