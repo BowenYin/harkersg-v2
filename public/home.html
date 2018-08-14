@@ -1,90 +1,104 @@
-<md-content flex layout="column">
-  <span ng-if="!signedIn" style="text-align: center;" layout-margin layout-padding class="md-headline">Welcome to the #1 source for school study guides and notes! Please sign in.</span>
-  <span ng-if="signedIn" style="text-align: center;" layout-margin layout-padding class="md-headline">Welcome back! Check for new features in the About page.</span>
-  <section flex layout="row">
-    <div flex layout-margin layout-padding>
-      <md-grid-list md-cols="3" md-cols-xs="1" md-cols-sm="2" md-cols-lg="4" md-cols-xl="5" md-row-height="225px" md-gutter="25px">
-        <md-grid-tile><md-card layout-fill>
-          <md-card-title>
-            <md-card-title-text>
-              <span class="md-headline" style="color: darkgreen;">Real-time</span>
-            </md-card-title-text>
-          </md-card-title>
-          <md-card-content>
-            Live updating study guides means you won't have to reload the page. Everything updates real-time right on your screen. When you like a study guide or submit a new one, it will show up immediately without any delays.
-          </md-card-content>
-        </md-card></md-grid-tile>
-        <md-grid-tile><md-card layout-fill>
-          <md-card-title>
-            <md-card-title-text>
-              <span class="md-headline" style="color: darkorange;">Responsive</span>
-            </md-card-title-text>
-          </md-card-title>
-          <md-card-content>
-            Mobile-friendly. Try resizing this window by making it smaller and larger. Everything will fit perfectly on your screen no matter what device you're using.
-          </md-card-content>
-        </md-card></md-grid-tile>
-        <md-grid-tile><md-card layout-fill>
-          <md-card-title>
-            <md-card-title-text>
-              <span class="md-headline" style="color: dodgerblue;">Fast</span>
-            </md-card-title-text>
-          </md-card-title>
-          <md-card-content>
-            This is a single-page application, meaning the entire page won't reload when you're visiting another page, which makes it a lot faster. No time is spent waiting; your notes/study guides should show up in less than 2 seconds.
-          </md-card-content>
-        </md-card></md-grid-tile>
-        <md-grid-tile><md-card layout-fill>
-          <md-card-title>
-            <md-card-title-text>
-              <span class="md-headline" style="color: darkviolet;">Modern</span>
-            </md-card-title-text>
-          </md-card-title>
-          <md-card-content>
-            A modern webpage design contributes to a great user experience. After some time, this should be the third-most visited page in your day, after PCR and email. Why? It looks nice.
-          </md-card-content>
-        </md-card></md-grid-tile>
-        <md-grid-tile><md-card layout-fill>
-          <md-card-title>
-            <md-card-title-text>
-              <span class="md-headline" style="color: royalblue;">Easy-to-use</span>
-            </md-card-title-text>
-          </md-card-title>
-          <md-card-content>
-            There are no tutorials or documentation; everything is straight-forward and easy-to-use. The study guides collection is simple enough that anyone can figure it out, but still has all the components necessary.
-          </md-card-content>
-        </md-card></md-grid-tile>
-        <md-grid-tile><md-card layout-fill>
-          <md-card-title>
-            <md-card-title-text>
-              <span class="md-headline" style="color: red;">Customizable</span>
-            </md-card-title-text>
-          </md-card-title>
-          <md-card-content>
-            Custom settings allow even more personalization, like theme color or dark mode. A custom feed also limits the study guides to only your own subjects, so you can access the content you need easily.
-          </md-card-content>
-        </md-card></md-grid-tile>
-        <md-grid-tile><md-card layout-fill>
-          <md-card-title>
-            <md-card-title-text>
-              <span class="md-headline" style="color: limegreen;">Secure</span>
-            </md-card-title-text>
-          </md-card-title>
-          <md-card-content>
-            All data on this website is kept secure by Google services. I have taken the steps necessary to prevent spammers from ruining the purpose of this study guide resource.
-          </md-card-content>
-        </md-card></md-grid-tile>
-        <md-grid-tile><md-card layout-fill>
-          <md-card-title>
-            <md-card-title-text>
-              <span class="md-headline" style="color: brown;">Accessible</span>
-            </md-card-title-text>
-          </md-card-title>
-          <md-card-content>
-            Filters in the study guides page allow you to get only the study guides that you need. Sorting features allow you to order study guides by date, likes, etc. The search bar allows you to jump directly to any subject.
-          </md-card-content>
-        </md-card></md-grid-tile>
-      </md-grid-list>
+<scrollme id="scrollme"></scrollme>
+<md-content id="content" flex layout="column">
+  <h3 ng-if="!signedIn" style="text-align: center;" layout-margin layout-padding>Welcome to the #1 source for school study guides and notes! Please sign in.</h3>
+  <h3 ng-if="signedIn" style="text-align: center;" layout-margin layout-padding>Welcome back! Check for new features in the About page.</h3>
+  <div class="scrollme" layout="column" layout-gt-sm="row" flex="none">
+    <img src="images/homepage/courses.png" width="90%" class="center" hide-gt-sm>
+    <div flex flex-gt-sm="45">
+      <div layout="column">
+        <div class="main">
+          <div class="md-display-1">Why HarkerSG?</div>
+          <p class="md-headline">
+            HarkerSG is a community where students share their study guides with others. Any member of the Harker School can access the growing collection of study resources for free.<br>
+            Built with modern web technologies and featuring an intuitive user interface and experience, HarkerSG will reduce your studying stress (even if it's only a little bit). Keep scrolling down to find out more.
+          </p>
+        </div>
+        <div class="gap"></div>
+        <div class="main">
+          <div class="md-display-1">Easily select your courses</div>
+          <p class="md-headline">
+            All of the available courses on HarkerSG are displayed here on the Courses page, including ones for both middle school and upper school. They are conveniently organized by subject so you can easily find the ones you need. Simply select the checkboxes next to the courses you're taking and hit Save to get a personalized feed of study guides.
+          </p>
+        </div>
+        <div class="gap"></div>
+        <div class="main">
+          <div class="md-display-1">Quickly search for specific classes</div>
+          <p class="md-headline">
+            Use the tools at the bottom of the Courses page to filter the course list, revert your changes, or save what you've selected. With the search bar, you can quickly find the course you need or even just display all honors courses. Then, HarkerSG does the work so you don't have to.
+          </p>
+        </div>
+        <div class="gap"></div>
+      </div>
     </div>
-  </section>
+    <div flex="55" hide show-gt-sm>
+      <div class="sticky">
+        <div class="main"><div>
+          <img src="/images/homepage/courses.png" class="container">
+          <img src="/images/homepage/courses-subject.png" class="component animateme" width="41.5%" style="top: 17.2%; left: -3.7%;" data-when="exit, -1, 0.6" data-from="0.75" data-to="1" data-easing="easeinout" data-scale="0.75">
+          <img src="/images/homepage/courses-subject.png" class="component animateme" width="41.5%" style="top: 17.2%; left: -3.7%;" data-when="exit, 1, 0.6" data-from="0.55" data-to="0.35" data-easing="easeinout" data-scale="0.75">
+          <img src="/images/homepage/courses-search.png" class="component animateme" width="44%" style="top: 90.1%; left: -7%;" data-when="exit, -1, 0.2" data-from="0.35" data-to="0.55" data-easing="easeinout" data-scale="0.65">
+          <img src="/images/homepage/courses-search.png" class="component animateme" width="44%" style="top: 90.1%; left: -7%;" data-when="exit, 1, 0.2" data-from="0.15" data-to="0" data-easing="easeinout" data-scale="0.65">
+        </div></div>
+      </div>
+    </div>
+  </div>
+  <div class="scrollme" layout="column" layout-gt-sm="row" flex="none">
+    <img src="images/homepage/sg.png" width="90%" class="center" hide-gt-sm>
+    <div flex="55" hide show-gt-sm>
+      <div class="sticky">
+        <div class="main">
+          <img src="/images/homepage/sg.png" class="container">
+          <img src="/images/homepage/sg-card.png" class="component animateme" width="31%" style="top: 64.2%; left: 2.1%;" data-when="exit, -1, 0.5" data-from="0.5" data-to="0.57" data-easing="easeinout" data-scale="0.7">
+          <img src="/images/homepage/sg-card.png" class="component animateme" width="31%" style="top: 64.2%; left: 2.1%;" data-when="exit, 1, 0.5" data-from="0.45" data-to="0.38" data-easing="easeinout" data-scale="0.7">
+          <img src="/images/homepage/sg-folder.png" class="component animateme" width="80.3%" style="top: 42%; left: -0.4%;" data-when="exit, -1, 0.35" data-from="0.34" data-to="0.41" data-easing="easeinout" data-scale="0.82">
+          <img src="/images/homepage/sg-folder.png" class="component animateme" width="80.3%" style="top: 42%; left: -0.4%;" data-when="exit, 1, 0.35" data-from="0.32" data-to="0.25" data-easing="easeinout" data-scale="0.82">
+          <img src="/images/homepage/sg-search.png" class="component animateme" width="79.7%" style="top: 24%; left: 0;" data-when="exit, -1, 0.2" data-from="0.22" data-to="0.29" data-easing="easeinout" data-scale="0.83">
+          <img src="/images/homepage/sg-search.png" class="component animateme" width="79.7%" style="top: 24%; left: 0;" data-when="exit, 1, 0.2" data-from="0.18" data-to="0.12" data-easing="easeinout" data-scale="0.83">
+          <img src="/images/homepage/sg-form.png" class="component animateme" width="27.7%" style="top: 12.5%; left: 70.2%;" data-when="exit, -1, 0.05" data-from="0.08" data-to="0.14" data-easing="easeinout" data-scale="0.75">
+          <img src="/images/homepage/sg-form.png" class="component animateme" width="27.7%" style="top: 12.5%; left: 70.2%;" data-when="exit, 1, 0.05" data-from="0.05" data-to="0" data-easing="easeinout" data-scale="0.75">
+        </div>
+      </div>
+    </div>
+    <div flex flex-gt-sm="45">
+      <div layout="column">
+        <div class="gap" hide show-gt-sm></div>
+        <div class="main">
+          <div class="md-display-1">Welcome to the Study Guides page</div>
+          <p class="md-headline">
+            As the primary page of the HarkerSG web app, the Study Guides page was crafted with the goals of students in mind. Think of it as your imaginary older sibling who already went through Harker but has unneeded study guides. Keep scrolling to learn more.
+          </p>
+        </div>
+        <div class="gap"></div>
+        <div class="main">
+          <div class="md-display-1">Packed with information and features</div>
+          <p class="md-headline">
+            Each study guide card features a title, description, icon, date, author, and more. Upon hovering over the study guide, you'll also see options for editing the SG's details, expressing your thanks, reporting the study guide, or moving it to a different folder (coming soon!).
+          </p>
+        </div>
+        <div class="gap"></div>
+        <div class="main">
+          <div class="md-display-1">Smart organizational techniques</div>
+          <p class="md-headline">
+            Each folder on the Study Guides page has its own subcollection of unique study guides that you might only need for a small part of the class. As a result, study guides in folders will only load once you click on it for the first time, which greatly improves loading speed. A clean, simple folder design also leads to an improved user experience.
+          </p>
+        </div>
+        <div class="gap"></div>
+        <div class="main">
+          <div class="md-display-1">Find exactly what you need</div>
+          <p class="md-headline">
+            Again, with searching and sorting tools, you can find the study guides you need with ease. Sort study guides by date, title, or number of likes using the select control. Filter study guides by their titles using the search bar. This all happens instantly, which means no more loading spinners.
+          </p>
+        </div>
+        <div class="gap"></div>
+        <div class="main">
+          <div class="md-display-1">Contribute to the collection</div>
+          <p class="md-headline">
+            Add your own study guides, notes, and folders using the form at the right. Customize all the information that's displayed with your study guide. With real-time notifications for users (coming soon!), this will be the fastest way of sharing your resources with other students.<br>
+            However, be sure that your study guide does not violate the Harker honor code: that includes past test questions, past graded assignments, and confidential information that's not intended to leave the classroom.
+          </p>
+        </div>
+        <div class="gap"></div>
+      </div>
+    </div>
+  </div>
 </md-content>
