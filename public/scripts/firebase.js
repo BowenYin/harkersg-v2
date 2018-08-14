@@ -7,14 +7,11 @@ const functions=firebase.functions();
 auth.useDeviceLanguage();
 function signIn() {
   var provider=new firebase.auth.GoogleAuthProvider();
-  auth.signInWithPopup(provider).then(function(result) {
-
-  }).catch(function(error) {
+  auth.signInWithPopup(provider).catch(function(error) {
     console.error(error);
   });
 }
 function signOut() {
-  //gapi.auth2.getAuthInstance().signOut();
   auth.signOut();
   document.getElementById("user-info-l").style.display="none";
   document.getElementById("user-info-r").style.display="none";

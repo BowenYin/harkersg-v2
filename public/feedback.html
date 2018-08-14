@@ -3,7 +3,6 @@
     <h1>Feedback</h1>
     <p><img id="github-logo" src="/images/github-logo.svg" height="20"><strong>Important:</strong> If you have a GitHub account, please create a new issue in the <a href="https://github.com/bowenyin/harkersg" target="_blank">HarkerSG repository</a> instead.</p>
     <form layout-margin name="feedback" flex flex-sm="70" flex-md="50" flex-lg="40" flex-xl="25">
-      <!--<md-tooltip ng-if="fbNo" md-delay="200" md-direction="top">Max one submission per hour.</md-tooltip>-->
       <md-tooltip ng-if="!signedIn" md-delay="200" md-direction="top">Please sign in to send feedback.</md-tooltip>
       <p class="md-body-2">Type of Feedback</p>
       <md-radio-group ng-model="fb.type" ng-disabled="!signedIn || fbLoading">
