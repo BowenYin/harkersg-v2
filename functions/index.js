@@ -11,7 +11,7 @@ exports.createUser=functions.auth.user().onCreate((user, context)=>{
 });
 exports.manageFlags=functions.firestore.document("studyguides/{id}").onUpdate((change, context)=>{
   var data=change.after.data();
-  if (data.flags.length>4) {
+  if (data.flags.length>3) {
     data.ref=change.after.ref;
     firestore.collection("trash").doc(change.after.id).set(data);
     console.log("Study guide ID#"+change.after.id+" deleted from "+change.after.ref.parent.parent.id+".");
@@ -210,12 +210,4 @@ exports.editFolder=functions.https.onCall((data, context)=>{
       console.log('Folder ID#'+data.folder+' edited in '+data.course+' by '+context.auth.token.name+' (UID '+context.auth.uid+').');
     }).catch(error=>{throw error;});
   });
-});
-exports.copySG=functions.https.onRequest((req, res)=>{
-  firestore.collection("courses").doc(req.query.course).collection("sg").doc(req.query.id).get().then(doc=>{
-    var data=doc.data();
-    return firestore.collection("courses").doc(req.query.newCourse).collection("sg").add(data).then(()=>{
-      return res.status(200).send("Done");
-    });
-  })
 });
