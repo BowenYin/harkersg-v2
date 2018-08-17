@@ -119,7 +119,3 @@ app.config(function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix("");
   $locationProvider.html5Mode(true);
 });
-app.directive("scrollme", function() {
-  $.getScript("/scripts/jquery.scrollme.min.js");
-  return {};
-});
