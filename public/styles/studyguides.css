@@ -1,98 +1,72 @@
 .flip {
-  transform: scaleY(-1);
-}
+  transform: scaleY(-1); }
 md-card-header, md-card-title, md-card-content {
-  cursor: pointer;
-}
+  cursor: pointer; }
 md-card-header:focus, md-card-title:focus, md-card-content:focus {
-  outline: none;
-}
+  outline: none; }
 md-grid-tile.folder {
   border: 1px solid #aaa;
-  border-radius: 2px;
-}
+  border-radius: 2px; }
 md-grid-tile.sg md-card-actions {
-  display: none !important;
-}
+  display: none !important; }
 md-grid-tile.sg:hover md-card-actions {
-  display: flex !important;
-}
+  display: flex !important; }
 .folder .edit-folder {
   display: none;
-  margin: 0 !important;
-}
+  margin: 0 !important; }
 .folder:hover .edit-folder {
-  display: inline-block;
-}
+  display: inline-block; }
 md-card .md-icon-button:not([disabled]) md-icon {
-  transition-duration: 100ms;
-}
+  transition-duration: 100ms; }
 md-card .md-icon-button:not([disabled]):hover md-icon {
-  opacity: 0.75;
-}
+  opacity: 0.75; }
 md-card md-card-header:first-child md-card-avatar {
   height: 32px;
   width: 32px;
-  margin-right: 8px;
-}
+  margin-right: 8px; }
 md-card md-card-header-text span {
   font-size: 12px !important;
   line-height: 16px !important;
   overflow-x: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
-}
+  white-space: nowrap; }
 md-card md-card-title md-card-title-text .md-subhead {
   font-size: 12px;
-  line-height: 15px;
-}
+  line-height: 15px; }
 .sg md-card md-card-title md-card-title-text .md-title {
   font-size: 16px;
-  line-height: 20px;
-}
+  line-height: 20px; }
 .sg md-card md-card-title md-card-title-text .md-subhead {
-  color: gray;
-}
+  color: gray; }
 .sg md-card md-card-header {
   padding: 8px 12px 6px;
-  min-height: 32px;
-}
+  min-height: 32px; }
 .sg md-card md-card-title {
   padding: 0 12px;
-  min-height: 0;
-}
+  min-height: 0; }
 .sg md-card md-card-actions {
-  margin: 0;
-}
+  margin: 0; }
 .sg-id {
   color: gray;
-  font-size: 6px;
-}
+  font-size: 6px; }
 .folder .md-title {
-  font-size: 16px;
-}
+  font-size: 16px; }
 .folder-card {
   min-height: 42px;
   height: 42px;
   width: 100%;
   margin: 0;
-  opacity: 0.7;
-}
+  opacity: 0.7; }
 .folder-card-title {
   padding-top: 8px;
-  padding-bottom: 8px;
-}
+  padding-bottom: 8px; }
 .folder-flip {
-  margin: 0 !important;
-}
+  margin: 0 !important; }
 md-card md-card-title md-card-title-text:only-child .md-subhead {
-  padding-top: 4px;
-}
+  padding-top: 4px; }
 #no-courses {
   margin: 0;
-  padding: 0;
-}
+  padding: 0; }
 #last-updated {
   margin-top: auto;
-  margin-bottom: auto;
-}
+  margin-bottom: auto; }
