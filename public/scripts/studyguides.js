@@ -194,7 +194,7 @@ app.controller("SGControl", function($scope, $rootScope, $mdToast, $mdDialog, $m
           info: $scope.sg.info,
         }).then(function() {
           $mdToast.show(
-            $mdToast.simple().textContent("Successfully updated study guide.").hideDelay(4000).action("OK").highlightAction(true)
+            $mdToast.simple().textContent("Saved.").hideDelay(3000).action("OK").highlightAction(true)
           );
         }).catch(function(error) {
           console.error(error);
@@ -224,7 +224,7 @@ app.controller("SGControl", function($scope, $rootScope, $mdToast, $mdDialog, $m
           title: $scope.folder.title,
         }).then(function() {
           $mdToast.show(
-            $mdToast.simple().textContent("Successfully updated folder.").hideDelay(4000).action("OK").highlightAction(true)
+            $mdToast.simple().textContent("Saved.").hideDelay(3000).action("OK").highlightAction(true)
           );
         }).catch(function(error) {
           console.error(error);
