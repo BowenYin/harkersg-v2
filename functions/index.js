@@ -161,6 +161,22 @@ exports.flagSG=functions.https.onCall((data, context)=>{
     }).catch(error=>{throw error;});
   });
 });
+exports.moveSG=functions.https.onCall((data, context)=>{
+  if (!context.auth)
+      throw new functions.https.HttpsError("unauthenticated");
+  if (!context.auth.token.email.match(/.+(?:@students\.|@staff\.|@)harker.org$/))
+    throw new functions.https.HttpsError("permission-denied");
+  return firestore.collection("users").doc(context.auth.uid).get().then(doc=>{
+    if (doc.data().locked)
+      throw new functions.https.HttpsError("permission-denied");
+    const docRef=firestore.collection("courses").doc(data.course).collection("sg").doc(data.id);
+    return docRef.get().then(doc=>{
+      if (data.folder!=null && !doc.data().folders.some(value=>{return value.time===data.folder;}))
+        throw new functions.https.HttpsError("not-found");
+      return docRef.collection("sg").doc(data.id).update({folder: data.folder});
+    });
+  });
+});
 exports.addFolder=functions.https.onCall((data, context)=>{
   if (!context.auth)
     throw new functions.https.HttpsError("unauthenticated");
