@@ -80,6 +80,10 @@
                             <md-icon class="material-icons">more_vert</md-icon>
                           </md-button>
                           <md-menu-content>
+                            <md-menu-item><md-button ng-click="move(sg.id, name, course.folders, sg.folder)">
+                              <md-icon>create_new_folder</md-icon>
+                              Move to a different folder...
+                            </md-button></md-menu-item>
                             <md-menu-item><md-button ng-disabled="sg.flags.indexOf(uid)!=-1" ng-click="flag(sg.id, name)">
                               <md-icon>report</md-icon>
                               Flag as spam/unusable/outdated
@@ -126,6 +130,10 @@
                   <md-icon class="material-icons">more_vert</md-icon>
                 </md-button>
                 <md-menu-content>
+                  <md-menu-item><md-button ng-click="move(sg.id, name, course.folders, sg.folder)">
+                    <md-icon>create_new_folder</md-icon>
+                    Move to a different folder...
+                  </md-button></md-menu-item>
                   <md-menu-item><md-button ng-disabled="sg.flags.indexOf(uid)!=-1" ng-click="flag(sg.id, name)">
                     <md-icon>report</md-icon>
                     Flag as spam/unusable/outdated

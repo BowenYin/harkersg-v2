@@ -1,0 +1,13 @@
+<md-bottom-sheet class="md-list" style="max-height: 500px; max-width: 420px; overflow-y: scroll; margin-left: auto; margin-right: auto;">
+  <md-subheader>Select a Folder</md-subheader>
+  <md-list>
+    <md-list-item ng-click="save(null)" ng-disabled="currentFolder==null"><div>
+      <md-icon>folder_open</md-icon>
+      <i layout-margin>No Folder</i>
+    </div></md-list-item>
+    <md-list-item ng-repeat="folder in folders" ng-click="save(folder.time)" ng-disabled="currentFolder==folder.time"><div>
+      <md-icon>{{currentFolder==folder.time?"folder_special":"folder"}}</md-icon>
+      <span layout-margin>{{folder.title}}</span>
+    </div></md-list-item>
+  </md-list>
+</md-bottom-sheet>

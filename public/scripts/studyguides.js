@@ -1,4 +1,4 @@
-app.controller("SGControl", function($scope, $rootScope, $mdToast, $mdDialog) {
+app.controller("SGControl", function($scope, $rootScope, $mdToast, $mdDialog, $mdBottomSheet) {
   $rootScope.navItem="studyguides";
   $rootScope.pageTitle="Notes / Study Guides";
   $rootScope.tabName="Notes/Study Guides - HarkerSG";
@@ -160,6 +160,19 @@ app.controller("SGControl", function($scope, $rootScope, $mdToast, $mdDialog) {
       );
     }
   };
+  $scope.move=function(id, course, folders, currentFolder) {
+    if ($scope.locked) {
+      $mdToast.show(
+				$mdToast.simple().textContent("You cannot move study guides since your account is locked.").hideDelay(4000).action("OK").highlightAction(true)
+			);
+    } else {
+  		$mdBottomSheet.show({
+        templateUrl: "move-sg.html",
+  			controller: MoveSGControl,
+        locals: {course: course, folders: folders, id: id, currentFolder: currentFolder},
+      });
+    }
+  };
   $scope.getImage=function(url) {
     if (url.indexOf("quizlet.com")!=-1) return "/images/quizlet.png";
     if (url.indexOf("docs.google.com")!=-1) return "/images/docs.png";
@@ -219,13 +232,38 @@ app.controller("SGControl", function($scope, $rootScope, $mdToast, $mdDialog) {
             $mdToast.simple().textContent("An unexpected error has occurred.").hideDelay(4000).action("OK").highlightAction(true)
           );
         });
-        $mdDialog.hide()
+        $mdDialog.hide();
         $mdToast.show(
           $mdToast.simple().textContent("Saving changes...").hideDelay(0)
         );
       }
 		};
-	}
+  }
+  function MoveSGControl($scope, $mdBottomSheet, id, course, folders, currentFolder) {
+    $scope.folders=folders;
+    $scope.currentFolder=currentFolder;
+    $scope.save=function(folder) {
+      var moveSG=functions.httpsCallable("moveSG");
+      moveSG({
+        id: id,
+        course: course,
+        folder: folder,
+      }).then(function() {
+        $mdToast.show(
+          $mdToast.simple().textContent("Saved.").hideDelay(1000)
+        );
+      }).catch(function(error) {
+        console.error(error);
+        $mdToast.show(
+          $mdToast.simple().textContent("An unexpected error has occurred.").hideDelay(4000).action("OK").highlightAction(true)
+        );
+      });
+      $mdBottomSheet.hide();
+      $mdToast.show(
+        $mdToast.simple().textContent("Saving...").hideDelay(0)
+      );
+    }
+  }
   $scope.toggleFolder=function(course, folder) {
     folder.cols=3-(folder.cols || 1);
     folder.xlCols=5-(folder.xlCols || 1);

@@ -169,11 +169,11 @@ exports.moveSG=functions.https.onCall((data, context)=>{
   return firestore.collection("users").doc(context.auth.uid).get().then(doc=>{
     if (doc.data().locked)
       throw new functions.https.HttpsError("permission-denied");
-    const docRef=firestore.collection("courses").doc(data.course).collection("sg").doc(data.id);
-    return docRef.get().then(doc=>{
+    const courseRef=firestore.collection("courses").doc(data.course);
+    return courseRef.get().then(doc=>{
       if (data.folder!=null && !doc.data().folders.some(value=>{return value.time===data.folder;}))
         throw new functions.https.HttpsError("not-found");
-      return docRef.collection("sg").doc(data.id).update({folder: data.folder});
+      return courseRef.collection("sg").doc(data.id).update({folder: data.folder});
     });
   });
 });
