@@ -116,7 +116,7 @@ app.controller("SGControl", function($scope, $rootScope, $mdToast, $mdDialog, $m
       window.open(link, "_blank");
     }, 250);
   };
-  $scope.like=function(id, course) {
+  $scope.like=function(id, course, likes) {
     var likeSG=functions.httpsCallable("likeSG");
     likeSG({
       id: id,
@@ -130,12 +130,14 @@ app.controller("SGControl", function($scope, $rootScope, $mdToast, $mdDialog, $m
       $mdToast.show(
         $mdToast.simple().textContent("An unexpected error has occurred.").hideDelay(4000).action("OK").highlightAction(true)
       );
+      likes.splice(likes.indexOf($scope.uid), 1);
     });
     $mdToast.show(
       $mdToast.simple().textContent("Saving...").hideDelay(0)
     );
+    likes.push($scope.uid);
   };
-  $scope.flag=function(id, course) {
+  $scope.flag=function(id, course, flags) {
     if ($scope.locked) {
       $mdToast.show(
         $mdToast.simple().textContent("You cannot flag study guides since your account is locked.").hideDelay(4000).action("OK").highlightAction(true)
@@ -154,10 +156,12 @@ app.controller("SGControl", function($scope, $rootScope, $mdToast, $mdDialog, $m
         $mdToast.show(
           $mdToast.simple().textContent("An unexpected error has occurred.").hideDelay(4000).action("OK").highlightAction(true)
         );
+        flags.splice(flags.indexOf($scope.uid), 1);
       });
       $mdToast.show(
         $mdToast.simple().textContent("Saving...").hideDelay(0)
       );
+      flags.push($scope.uid);
     }
   };
   $scope.move=function(id, course, folders, currentFolder) {
