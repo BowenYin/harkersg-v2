@@ -30,7 +30,7 @@
       <img id="profile-pic-l" alt="avatar" class="md-avatar" src="/images/profile-pic.jpg">
       <div class="md-list-item-text">
         <h3 id="user-name-l"></h3>
-        <h4>{{flags}} flag<span ng-if="flags!=1">s</span></h4>
+        <h4 ng-if="locked" style="font-weight: bold;">Account Locked</h4>
       </div>
       <md-menu class="md-secondary" md-offset="0 55">
         <md-button class="md-icon-button"><md-icon class="material-icons">arrow_drop_down</md-icon></md-button>
