@@ -36,10 +36,10 @@
         <md-button class="md-icon-button"><md-icon class="material-icons">arrow_drop_down</md-icon></md-button>
         <md-menu-content width="3">
           <md-menu-item>
-            <md-button ng-href="/settings" ng-click="reset()"><md-icon>person</md-icon>Profile</md-button>
+            <md-button ng-href="/settings" ng-click="toggleLeftMenu(); reset();"><md-icon>person</md-icon>Profile</md-button>
           </md-menu-item>
           <md-menu-item>
-            <md-button ng-href="/settings" ng-click="reset()"><md-icon>settings</md-icon>Settings</md-button>
+            <md-button ng-href="/settings" ng-click="toggleLeftMenu(); reset();"><md-icon>settings</md-icon>Settings</md-button>
           </md-menu-item>
           <md-menu-divider></md-menu-divider>
           <md-menu-item>
