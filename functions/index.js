@@ -32,6 +32,11 @@ exports.restore=functions.https.onRequest((req, res)=>{
     }).catch(error=>{return res.status(400).send("An unexpected error has occurred: "+error);});
   });
 });
+exports.updateUser=functions.https.onCall((data, context)=>{
+  if (!context.auth)
+    throw new functions.https.HttpsError("unauthenticated");
+  firestore.collection("users").doc(context.auth.uid).update({name: context.auth.token.name});
+});
 exports.sendFeedback=functions.https.onCall((data, context)=>{
   if (!context.auth)
     throw new functions.https.HttpsError("unauthenticated");

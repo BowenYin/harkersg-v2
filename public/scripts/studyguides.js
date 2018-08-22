@@ -180,7 +180,7 @@ app.controller("SGControl", function($scope, $rootScope, $mdToast, $mdDialog, $m
   $scope.getImage=function(url) {
     if (url.indexOf("quizlet.com")!=-1) return "/images/quizlet.png";
     if (url.indexOf("docs.google.com")!=-1) return "/images/docs.png";
-    else return "/images/link.png";
+    return "/images/link.png";
   };
 	function EditSGControl($scope, $mdDialog, sg, course) {
     $scope.sg={};

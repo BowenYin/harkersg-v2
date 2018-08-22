@@ -9,9 +9,7 @@ app.controller("CoursesControl", function($scope, $rootScope, $mdMedia, $mdToast
 	db.ref("/courses").once("value").then(function(snapshot) {
 		$scope.list=snapshot.val();
 		$scope.$apply();
-	}).finally(function() {
-		$scope.loading=false;
-	});
+	}).finally(function() {$scope.loading=false;});
 	$scope.update=function(course) {
 		if ($scope.selected[course]!==true) delete $scope.selected[course];
 		$scope.unsaved=!angular.equals($scope.saved, $scope.selected);
@@ -31,7 +29,7 @@ app.controller("CoursesControl", function($scope, $rootScope, $mdMedia, $mdToast
 		$mdToast.show(
 			$mdToast.simple().textContent("Saving courses... (This may take up to 30 seconds.)").hideDelay(0)
 		);
-		updateCourses({courses: arr}).then(function(result) {
+		updateCourses({courses: arr}).then(function() {
 			$scope.loading=false;
 			$mdToast.hide();
 			window.location.reload(false);
@@ -40,11 +38,7 @@ app.controller("CoursesControl", function($scope, $rootScope, $mdMedia, $mdToast
 			$mdToast.hide();
 			console.log(error);
 			$mdToast.show(
-				$mdToast.simple()
-				.textContent("An unexpected error has occurred.")
-				.hideDelay(4000)
-				.action("OK")
-				.highlightAction(true)
+				$mdToast.simple().textContent("An unexpected error has occurred.").hideDelay(4000).action("OK").highlightAction(true)
 			);
 		});
 	};
