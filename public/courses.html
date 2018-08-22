@@ -37,53 +37,53 @@
 				<div flex="none" flex-gt-md layout="column">
 					<fieldset>
 						<legend>Math</legend>
-						<md-checkbox ng-repeat="course in list.us.math | filter: search" ng-model="selected[course]" ng-change="update(course)">{{course}}</md-checkbox>
+						<md-checkbox ng-repeat="course in list.us.math | filter: search" ng-model="selected[course]" ng-change="update(course)" ng-disabled="isMS">{{course}}</md-checkbox>
 					</fieldset>
 					<fieldset>
 						<legend>English</legend>
-						<md-checkbox ng-repeat="course in list.us.english | filter: search" ng-model="selected[course]" ng-change="update(course)">{{course}}</md-checkbox>
+						<md-checkbox ng-repeat="course in list.us.english | filter: search" ng-model="selected[course]" ng-change="update(course)" ng-disabled="isMS">{{course}}</md-checkbox>
 					</fieldset>
 					<fieldset>
 						<legend>Science</legend>
-						<md-checkbox ng-repeat="course in list.us.science | filter: search" ng-model="selected[course]" ng-change="update(course)">{{course}}</md-checkbox>
+						<md-checkbox ng-repeat="course in list.us.science | filter: search" ng-model="selected[course]" ng-change="update(course)" ng-disabled="isMS">{{course}}</md-checkbox>
 					</fieldset>
 					<fieldset>
 						<legend>History</legend>
-						<md-checkbox ng-repeat="course in list.us.history | filter: search" ng-model="selected[course]" ng-change="update(course)">{{course}}</md-checkbox>
+						<md-checkbox ng-repeat="course in list.us.history | filter: search" ng-model="selected[course]" ng-change="update(course)" ng-disabled="isMS">{{course}}</md-checkbox>
 					</fieldset>
 				</div>
 				<div flex="none" flex-gt-md layout="column">
 					<fieldset>
 						<legend>Computer Science</legend>
-						<md-checkbox ng-repeat="course in list.us.cs | filter: search" ng-model="selected[course]" ng-change="update(course)">{{course}}</md-checkbox>
+						<md-checkbox ng-repeat="course in list.us.cs | filter: search" ng-model="selected[course]" ng-change="update(course)" ng-disabled="isMS">{{course}}</md-checkbox>
 					</fieldset>
 					<fieldset>
 						<legend>Spanish</legend>
-						<md-checkbox ng-repeat="course in list.us.spanish | filter: search" ng-model="selected[course]" ng-change="update(course)">{{course}}</md-checkbox>
+						<md-checkbox ng-repeat="course in list.us.spanish | filter: search" ng-model="selected[course]" ng-change="update(course)" ng-disabled="isMS">{{course}}</md-checkbox>
 					</fieldset>
 					<fieldset>
 						<legend>French</legend>
-						<md-checkbox ng-repeat="course in list.us.french | filter: search" ng-model="selected[course]" ng-change="update(course)">{{course}}</md-checkbox>
+						<md-checkbox ng-repeat="course in list.us.french | filter: search" ng-model="selected[course]" ng-change="update(course)" ng-disabled="isMS">{{course}}</md-checkbox>
 					</fieldset>
 					<fieldset>
 						<legend>Japanese</legend>
-						<md-checkbox ng-repeat="course in list.us.japanese | filter: search" ng-model="selected[course]" ng-change="update(course)">{{course}}</md-checkbox>
+						<md-checkbox ng-repeat="course in list.us.japanese | filter: search" ng-model="selected[course]" ng-change="update(course)" ng-disabled="isMS">{{course}}</md-checkbox>
 					</fieldset>
 					<fieldset>
 						<legend>Latin</legend>
-						<md-checkbox ng-repeat="course in list.us.latin | filter: search" ng-model="selected[course]" ng-change="update(course)">{{course}}</md-checkbox>
+						<md-checkbox ng-repeat="course in list.us.latin | filter: search" ng-model="selected[course]" ng-change="update(course)" ng-disabled="isMS">{{course}}</md-checkbox>
 					</fieldset>
 					<fieldset>
 						<legend>Mandarin</legend>
-						<md-checkbox ng-repeat="course in list.us.mandarin | filter: search" ng-model="selected[course]" ng-change="update(course)">{{course}}</md-checkbox>
+						<md-checkbox ng-repeat="course in list.us.mandarin | filter: search" ng-model="selected[course]" ng-change="update(course)" ng-disabled="isMS">{{course}}</md-checkbox>
 					</fieldset>
 					<fieldset>
 						<legend>Visual/Performing Arts</legend>
-						<md-checkbox ng-repeat="course in list.us.art | filter: search" ng-model="selected[course]" ng-change="update(course)">{{course}}</md-checkbox>
+						<md-checkbox ng-repeat="course in list.us.art | filter: search" ng-model="selected[course]" ng-change="update(course)" ng-disabled="isMS">{{course}}</md-checkbox>
 					</fieldset>
 					<fieldset>
 						<legend>Business & Entrepreneurship</legend>
-						<md-checkbox ng-repeat="course in list.us.business | filter: search" ng-model="selected[course]" ng-change="update(course)">{{course}}</md-checkbox>
+						<md-checkbox ng-repeat="course in list.us.business | filter: search" ng-model="selected[course]" ng-change="update(course)" ng-disabled="isMS">{{course}}</md-checkbox>
 					</fieldset>
 				</div>
 			</div>

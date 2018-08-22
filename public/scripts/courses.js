@@ -6,6 +6,7 @@ app.controller("CoursesControl", function($scope, $rootScope, $mdMedia, $mdToast
 	$scope.unsaved=false;
 	$scope.search="";
 	$scope.gtXs=$mdMedia("gt-xs");
+	$scope.isMS=(new Date("6/10/20"+$scope.email.substring(0, 2))-new Date())/1000/3600/24/365.24>=4;
 	db.ref("/courses").once("value").then(function(snapshot) {
 		$scope.list=snapshot.val();
 		$scope.$apply();
