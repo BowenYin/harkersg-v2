@@ -34,7 +34,7 @@
           <div layout="column" layout-fill style="overflow: hidden;">
             <md-card class="folder-card" layout="row">
               <md-card-title class="folder-card-title" flex ng-click="toggleFolder(name, folder)">
-                <md-card-title-text style="overflow-x: scroll;">
+                <md-card-title-text style="overflow-x: auto; overflow-y: hidden; padding-bottom: 20px; height: 100%;">
                   <span class="md-title" style="white-space: nowrap;">{{folder.title}}</span>
                 </md-card-title-text>
               </md-card-title>
