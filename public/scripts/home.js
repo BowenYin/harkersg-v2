@@ -24,6 +24,7 @@ app.controller("MainControl", function($scope, $mdSidenav, $mdDialog, $mdToast) 
       $scope.profilePic=auth.currentUser.photoURL || "/images/profile-pic.jpg";
       $scope.fullName=auth.currentUser.displayName;
       $scope.email=auth.currentUser.email;
+      $scope.isMS=(new Date("6/10/20"+$scope.email.substring(0, 2))-new Date())/1000/3600/24/365.24>=4;
       fs.collection("users").doc(user.uid).get().then(function(doc) {
         if (doc.exists) {
           const data=doc.data();
