@@ -91,6 +91,8 @@ a {
 #title {
   font-weight: 100;
   font-size: 24px; }
+#menu-github-logo svg {
+  max-height: 24px; }
 /* HOMEPAGE STYLES */
 .sticky {
   position: sticky;
