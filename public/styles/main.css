@@ -38,7 +38,8 @@ md-select-value {
   transition-duration: 150ms;
   -webkit-transition-duration: 150ms; }
 md-sidenav {
-  width: 300px; }
+  width: 300px;
+  min-width:  300px; }
 md-dialog {
   border-radius: 2px !important; }
 md-switch .md-container {
