@@ -77,8 +77,7 @@ a {
   align-self: center; }
 #message {
   font-size: 12px;
-  margin-top: auto;
-  margin-bottom: auto; }
+  margin: auto 8px; }
 #copyright:hover {
   background-color: transparent;
   cursor: default; }
