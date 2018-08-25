@@ -13,7 +13,7 @@ app.controller("MainControl", function($scope, $mdSidenav, $mdDialog, $mdToast) 
     if (user) {
       $scope.signedIn=true;
       $scope.uid=user.uid;
-      $scope.isSchool=/.+(?:@students\.|@staff\.|@)harker.org$/.test(auth.currentUser.email);
+      $scope.isSchool=/.+(?:@students\.|@staff\.|@)harker\.org$/.test(auth.currentUser.email);
       document.getElementById("user-info-l").style.display="";
       document.getElementById("user-info-r").style.display="";
       document.getElementById("sign-in").style.display="none";
