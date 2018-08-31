@@ -295,7 +295,7 @@ app.controller("SGControl", function($scope, $rootScope, $mdToast, $mdDialog, $m
           folder.xlRows=Math.max(2, Math.ceil(folder.sg.length/5)*3+1);
           folder.loading=false;
         }
-        $scope.lastUpdated=new Date();
+        $rootScope.lastUpdated=new Date();
         $scope.$apply();
       });
     } else if (folder.rows>1) {
