@@ -94,7 +94,7 @@
 			<md-autocomplete hide show-gt-sm ng-disabled="loading" placeholder="Search courses" md-items="[]" md-search-text="search" md-select-on-focus></md-autocomplete>
 			<span class="info" hide show-gt-md>Report missing courses using <a href="/feedback" ng-click="goToFeedback()">Feedback</a> form.</span>
 			<div flex></div>
-			<span class="error" ng-if="max">Max 7 courses</span>
+			<span class="error" ng-if="max">Max 9 courses</span>
 			<md-button class="error" ng-if="unsaved && (!max || gtXs)" ng-disabled="true">Unsaved Changes</md-button>
 			<md-button ng-disabled="loading || !signedIn" ng-click="selected={}; update();">Deselect All</md-button>
 			<md-button class="md-raised" ng-disabled="loading || !unsaved" ng-click="reset()">Reset</md-button>

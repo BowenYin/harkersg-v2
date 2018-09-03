@@ -13,7 +13,7 @@ app.controller("CoursesControl", function($scope, $rootScope, $mdMedia, $mdToast
 	$scope.update=function(course) {
 		if ($scope.selected[course]!==true) delete $scope.selected[course];
 		$scope.unsaved=!angular.equals($scope.saved, $scope.selected);
-		$scope.max=Object.keys($scope.selected).length>7;
+		$scope.max=Object.keys($scope.selected).length>9;
 	};
 	$scope.reset=function() {
 		$scope.selected={};

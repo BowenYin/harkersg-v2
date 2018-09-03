@@ -59,7 +59,7 @@ exports.updateCourses=functions.https.onCall((data, context)=>{
     throw new functions.https.HttpsError("unauthenticated");
   if (!context.auth.token.email.match(/.+(?:@students\.|@staff\.|@)harker.org$/))
     throw new functions.https.HttpsError("permission-denied");
-  if (data.courses.constructor!==Array || data.courses.length>7)
+  if (data.courses.constructor!==Array || data.courses.length>9)
     throw new functions.https.HttpsError("invalid-argument");
   return firestore.collection("users").doc(context.auth.uid).update({
     courses: data.courses,
